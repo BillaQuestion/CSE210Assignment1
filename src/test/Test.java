@@ -18,14 +18,19 @@ import model.Person;
  *
  * @author Bill
  */
+
+//Try to use Junit
 public class Test {
 
-    private static final Features F = new Features();
-    public static String PERSISTENCE_UNIT = "testJPA";
-//    public static String PERSISTENCE_UNIT = "cse210Connector";
+    private final Features features;
+    public static String persistence_unit;
 
-    public static void addData() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+    public Test(String pu){
+        features = new Features();
+        persistence_unit = pu;
+    }
+    public void addData() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -38,8 +43,8 @@ public class Test {
         emf.close();
     }
 
-    public static void personAddTest() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+    public void personAddTest() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -52,8 +57,8 @@ public class Test {
         emf.close();
     }
 
-    public static void friendsAddTest() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+    public void friendsAddTest() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -66,8 +71,8 @@ public class Test {
         emf.close();
     }
 
-    public static void annotationAddTest() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+    public void annotationAddTest() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -80,23 +85,23 @@ public class Test {
         emf.close();
     }
 
-    public static void myDetailInformationTest() {
-        F.myDetailInformation();
+    public void myDetailInformationTest() {
+        features.myDetailInformation();
     }
 
-    public static void allMyFriendsDetailInformationTest() {
-        F.allMyFriendsDetailInformation();
+    public void allMyFriendsDetailInformationTest() {
+        features.allMyFriendsDetailInformation();
     }
 
-    public static void allMyWebpagesTest() {
-        F.allMyWebpages();
+    public void allMyWebpagesTest() {
+        features.allMyWebpages();
     }
 
-    public static void allMyTagsTest() {
-        F.allMyTags();
+    public void allMyTagsTest() {
+        features.allMyTags();
     }
 
-    public static void allFriendsWebsiteTest() {
-        F.allFriendsWebsite();
+    public void allFriendsWebsiteTest() {
+        features.allFriendsWebsite();
     }
 }

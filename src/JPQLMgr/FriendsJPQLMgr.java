@@ -15,7 +15,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import model.Friends;
 import model.Person;
-import static test.Test.PERSISTENCE_UNIT;
+import static test.Test.persistence_unit;
 
 /**
  *
@@ -23,14 +23,14 @@ import static test.Test.PERSISTENCE_UNIT;
  */
 public class FriendsJPQLMgr {
 
-    public List<Friends> find(String mid) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+    public List<Friends> find(String myid) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
         List<Friends> lf = em.createQuery("SELECT c FROM model.Friends c WHERE c.myID LIKE :myId")
-                .setParameter("myId", mid)
+                .setParameter("myId", myid)
                 .getResultList();
 
         em.close();
@@ -39,8 +39,8 @@ public class FriendsJPQLMgr {
         return lf;
     }
 
-    public void tryIsFriend(String myId, String friendId) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+    public void tryIsFriend(String myId, String friendId) throws NoResultException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();

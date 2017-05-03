@@ -10,7 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import model.Person;
-import static test.Test.PERSISTENCE_UNIT;
+import static test.Test.persistence_unit;
 
 /**
  *
@@ -19,7 +19,7 @@ import static test.Test.PERSISTENCE_UNIT;
 public class PersonJPQLMgr {
 
     public Person find(String id) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();

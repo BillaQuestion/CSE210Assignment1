@@ -14,6 +14,7 @@ import model.Annotation;
 import JPQLMgr.PersonJPQLMgr;
 import JPQLMgr.FriendsJPQLMgr;
 import JPQLMgr.AnnotationJPQLMgr;
+import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
 
 /**
@@ -115,7 +116,7 @@ public class Features {
     }
 
     public List<Annotation> allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(String web, String oid) {
-        tryIfICanSeeThis(web, oid);
+        tryIfICanSeeThisAnnotation(web, oid);
         List<Annotation> la = AMGR.find(oid, web);
 
         la.sort((Object o1, Object o2) -> {
@@ -126,8 +127,9 @@ public class Features {
         return la;
     }
 
-    public void addAnnotation(String oid, String web, String t) {
-        tryIfICanSeeThis(web, oid);
+    //EntityExistsException when 
+    public void addAnnotation(String oid, String web, String t) throws EntityExistsException{
+        tryIfICanSeeThisAnnotation(web, oid);
         Annotation a = new Annotation(MYID, t, web, oid);
         AMGR.add(a);
     }
@@ -152,7 +154,7 @@ public class Features {
 
     }
 
-    private void tryIfICanSeeThis(String web, String id) {
+    private void tryIfICanSeeThisAnnotation(String web, String id) {
         if (!id.equals(MYID)) {
             try {
                 FMGR.tryIsFriend(MYID, id);

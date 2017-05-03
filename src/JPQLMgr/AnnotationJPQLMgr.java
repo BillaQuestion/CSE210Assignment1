@@ -12,7 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import model.Annotation;
-import static test.Test.PERSISTENCE_UNIT;
+import static test.Test.persistence_unit;
 
 /**
  *
@@ -21,7 +21,7 @@ import static test.Test.PERSISTENCE_UNIT;
 public class AnnotationJPQLMgr {
 
     public List<Annotation> find(String oid) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -37,7 +37,7 @@ public class AnnotationJPQLMgr {
     }
 
     public List<Annotation> findByTagger(String tid) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -53,7 +53,7 @@ public class AnnotationJPQLMgr {
     }
 
     public List<Annotation> find(String oid, String web) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -70,7 +70,7 @@ public class AnnotationJPQLMgr {
     }
 
     public List<Annotation> find(String oid, String web, String tag) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -88,7 +88,7 @@ public class AnnotationJPQLMgr {
     }
 
     public List<Annotation> find(String oid, String web, String tag, String tid) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -111,7 +111,7 @@ public class AnnotationJPQLMgr {
             throw new EntityExistsException();
         }
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -123,7 +123,7 @@ public class AnnotationJPQLMgr {
     }
 
     public void remove(Annotation a) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
@@ -135,7 +135,7 @@ public class AnnotationJPQLMgr {
     }
 
     private boolean isIdentity(Annotation a) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
