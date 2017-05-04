@@ -37,4 +37,30 @@ public class PersonJPQLMgr {
 
         return p;
     }
+
+    public void add(Person p) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction userTransaction = em.getTransaction();
+        userTransaction.begin();
+
+        em.persist(p);
+
+        userTransaction.commit();
+        em.close();
+        emf.close();
+    }
+
+    public void modify(Person p) throws IllegalArgumentException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction userTransaction = em.getTransaction();
+        userTransaction.begin();
+
+        em.merge(p);
+
+        userTransaction.commit();
+        em.close();
+        emf.close();
+    }
 }

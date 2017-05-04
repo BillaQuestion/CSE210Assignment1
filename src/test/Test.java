@@ -6,10 +6,13 @@
 package test;
 
 import Business.Features;
+import Business.Initialization;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.RollbackException;
 import model.Annotation;
 import model.Friends;
 import model.Person;
@@ -27,6 +30,15 @@ public class Test {
     public Test(String pu) {
         features = new Features(pu);
         persistence_unit = pu;
+    }
+
+    public void initialization() {
+        Initialization i = new Initialization(persistence_unit);
+        try {
+            i.addFreinds("1405898");
+        } catch (RollbackException re) {
+            System.out.println("Exception catch.");
+        }
     }
 
     public void addData() {
@@ -72,7 +84,11 @@ public class Test {
     }
 
     public void annotationAddTest() {
-        features.addAnnotation("1405896", "testWeb", "testTag");
+        try {
+            features.addAnnotation("1405896", "testWeb", "testTag");
+        } catch (EntityExistsException ee) {
+            System.out.println("Exception catch.");
+        }
     }
 
     public void myDetailInformationTest() {

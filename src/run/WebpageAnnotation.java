@@ -14,12 +14,13 @@ public class WebpageAnnotation {
     public static void main(String[] args) {
         Test t = new Test("testJPA");
 //        Test t = new Test("cse210Connector");
-        t.annotationAddTest();
+//        t.annotationAddTest();
+//        t.initialization();
 //        t.friendsAddTest();
-        // <editor-fold defaultstate="collapsed" desc="Local Server Test">
+
 //        Test.addData();
 
-//        Test.personAddTest();
+        t.personAddTest();
 //        Test.friendsAddTest();
 //        Test.myDetailInformationTest();
 //        Test.allMyFriendsDetailInformationTest();
@@ -28,7 +29,6 @@ public class WebpageAnnotation {
 //Test.allMyTagsTest();
 //Test.allFriendsWebsiteTest();
 
-        // </editor-fold>
     }
 
 }

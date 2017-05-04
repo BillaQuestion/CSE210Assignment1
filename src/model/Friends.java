@@ -4,57 +4,110 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+//import model.Friends.FriendsId;
 
 /**
  *
  * @author Shiyao Zhang
  */
 @Entity(name = "FRIENDS")
+//@IdClass(FriendsId.class)
 public class Friends implements Serializable {
 
-//    @Id
-//    private String uUID;
+    @Id
+    @Column(nullable = false, unique = false)
+    private String myId;
 
     @Id
     @Column(nullable = false, unique = false)
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private String myID;
-
-    @Id
-    @Column(nullable = false, unique = false)
-    private String friendID;
+    private String friendId;
 
     public Friends() {
-//        uUID = UUID.randomUUID().toString();
     }
 
     public Friends(String m, String f) {
-        myID = m;
-        friendID = f;
-//        uUID = UUID.randomUUID().toString();
+        myId = m;
+        friendId = f;
     }
 
     public void setMyID(String m) {
-        myID = m;
+        myId = m;
     }
 
     public String getMyID() {
-        return myID;
+        return myId;
     }
 
     public void setFriendID(String f) {
-        friendID = f;
+        friendId = f;
     }
 
     public String getFriendID() {
-        return friendID;
+        return friendId;
     }
 
-//    public void setUUID(UUID u) {
-//        uUID = u.toString();
-//    }
+//    public class FriendsId implements Serializable {
 //
-//    public String getUUID() {
-//        return uUID;
+//        private String myId;
+//        private String friendId;
+//
+//        public FriendsId() {
+//        }
+//
+//        public FriendsId(String m, String f) {
+//            myId = m;
+//            friendId = f;
+//        }
+//
+//        public void setMyID(String m) {
+//            myId = m;
+//        }
+//
+//        public String getMyId() {
+//            return myId;
+//        }
+//
+//        public void setFriendID(String f) {
+//            friendId = f;
+//        }
+//
+//        public String getFriendId() {
+//            return friendId;
+//        }
+//
+//        @Override
+//        public int hashCode() {
+//            return myId.hashCode() + 31 * friendId.hashCode();
+//        }
+//
+//        @Override
+//        public boolean equals(Object obj) {
+//            if (this == obj) {
+//                return true;
+//            }
+//            if (obj == null) {
+//                return false;
+//            }
+//            if (getClass() != obj.getClass()) {
+//                return false;
+//            }
+//            FriendsId other = (FriendsId) obj;
+//            if (myId == null) {
+//                if (other.myId != null) {
+//                    return false;
+//                }
+//            } else if (!myId.equals(other.myId)) {
+//                return false;
+//            }
+//            if (friendId == null) {
+//                if (other.friendId != null) {
+//                    return false;
+//                }
+//            } else if (!friendId.equals(other.friendId)) {
+//                return false;
+//            }
+//            return true;
+//        }
 //    }
 }

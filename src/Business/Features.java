@@ -21,24 +21,18 @@ import javax.persistence.NoResultException;
  *
  * @author Bill
  */
-public class Features {
+public class Features extends Business {
 
-    private final PersonJPQLMgr PMGR;
-    private final FriendsJPQLMgr FMGR;
-    private final AnnotationJPQLMgr AMGR;
-    private static final String MYID = "1405896";
-
-    public Features(String pu){
-        PMGR = new PersonJPQLMgr(pu);
-        FMGR = new FriendsJPQLMgr(pu);
-        AMGR = new AnnotationJPQLMgr(pu);
+    public Features(String pu) {
+        super(pu);
     }
+
     public Person myDetailInformation() {
-        return PMGR.find(MYID);
+        return PMGR.find(MY_ID);
     }
 
     public List<Person> allMyFriendsDetailInformation() {
-        List<Friends> lf = FMGR.find(MYID);
+        List<Friends> lf = FMGR.find(MY_ID);
 
         List<Person> lp = new ArrayList<>();
         ListIterator<Friends> it = lf.listIterator();
@@ -60,7 +54,7 @@ public class Features {
     }
 
     public List<String> allMyWebpages() {
-        List<Annotation> la = AMGR.find(MYID);
+        List<Annotation> la = AMGR.find(MY_ID);
 
         ArrayList<String> ls = new ArrayList<>();
         ListIterator<Annotation> it = la.listIterator();
@@ -73,7 +67,7 @@ public class Features {
     }
 
     public List<String> allMyTags() {
-        List<Annotation> la = AMGR.findByTagger(MYID);
+        List<Annotation> la = AMGR.findByTagger(MY_ID);
 
         ArrayList<String> ls = new ArrayList<>();
         ListIterator<Annotation> it = la.listIterator();
@@ -88,7 +82,7 @@ public class Features {
     }
 
     public List<String> allFriendsWebsite() {
-        List<Friends> lf = FMGR.find(MYID);
+        List<Friends> lf = FMGR.find(MY_ID);
 
         ArrayList<String> lw = new ArrayList<>();
         ListIterator<Friends> it = lf.listIterator();
@@ -133,24 +127,24 @@ public class Features {
     }
 
     //EntityExistsException when 
-    public void addAnnotation(String oid, String web, String t) throws EntityExistsException{
+    public void addAnnotation(String oid, String web, String t) throws EntityExistsException {
         tryIfICanSeeThisAnnotation(web, oid);
-        Annotation a = new Annotation(MYID, t, web, oid);
+        Annotation a = new Annotation(MY_ID, t, web, oid);
         AMGR.add(a);
     }
 
     public void removeAnnotation(String tag, String web) {
-        List<Annotation> la = AMGR.find(MYID, web, tag);
+        List<Annotation> la = AMGR.find(MY_ID, web, tag);
         if (!la.isEmpty()) {
             ListIterator<Annotation> it = la.listIterator();
             while (it.hasNext()) {
                 AMGR.remove(it.next());
             }
         }
-        List<Friends> lf = FMGR.find(MYID);
+        List<Friends> lf = FMGR.find(MY_ID);
         ListIterator<Friends> it = lf.listIterator();
         while (it.hasNext()) {
-            la = AMGR.find(it.next().getFriendID(), web, tag, MYID);
+            la = AMGR.find(it.next().getFriendID(), web, tag, MY_ID);
             ListIterator<Annotation> ita = la.listIterator();
             while (it.hasNext()) {
                 AMGR.remove(ita.next());
@@ -158,15 +152,11 @@ public class Features {
         }
 
     }
-    
-    public void addFreinds(String fid){
-        FMGR.add(MYID, fid);
-    }
 
     private void tryIfICanSeeThisAnnotation(String web, String id) {
-        if (!id.equals(MYID)) {
+        if (!id.equals(MY_ID)) {
             try {
-                FMGR.tryIsFriend(MYID, id);
+                FMGR.tryIsFriend(MY_ID, id);
             } catch (NoResultException nre) {
                 throw new NoResultException("I cannot see website of a stranger.");
             }
