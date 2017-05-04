@@ -72,17 +72,7 @@ public class Test {
     }
 
     public void annotationAddTest() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction userTransaction = em.getTransaction();
-        userTransaction.begin();
-
-        Annotation a = new Annotation("1405896", "tag", "xjtlu.edu.cn", "1405896");
-        em.persist(a);
-
-        userTransaction.commit();
-        em.close();
-        emf.close();
+        features.addAnnotation("1405896", "testWeb", "testTag");
     }
 
     public void myDetailInformationTest() {

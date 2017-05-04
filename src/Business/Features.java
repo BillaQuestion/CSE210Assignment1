@@ -158,6 +158,10 @@ public class Features {
         }
 
     }
+    
+    public void addFreinds(String fid){
+        FMGR.add(MYID, fid);
+    }
 
     private void tryIfICanSeeThisAnnotation(String web, String id) {
         if (!id.equals(MYID)) {

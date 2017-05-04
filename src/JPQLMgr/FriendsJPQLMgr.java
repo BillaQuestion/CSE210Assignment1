@@ -25,6 +25,19 @@ public class FriendsJPQLMgr {
         persistence_unit = pu;
     }
 
+    public void add(String mid, String fid) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction userTransaction = em.getTransaction();
+        userTransaction.begin();
+
+        em.persist(new Friends(mid, fid));
+
+        userTransaction.commit();
+        em.close();
+        emf.close();
+    }
+
     public List<Friends> find(String myid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
@@ -35,6 +48,7 @@ public class FriendsJPQLMgr {
                 .setParameter("myId", myid)
                 .getResultList();
 
+        userTransaction.commit();
         em.close();
         emf.close();
 
@@ -59,6 +73,7 @@ public class FriendsJPQLMgr {
                     .setParameter("friendId", myId)
                     .getSingleResult();
         } finally {
+            userTransaction.commit();
             em.close();
             emf.close();
         }

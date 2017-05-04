@@ -35,6 +35,7 @@ public class AnnotationJPQLMgr {
                 .setParameter("oid", oid)
                 .getResultList();
 
+        userTransaction.commit();
         em.close();
         emf.close();
 
@@ -51,6 +52,7 @@ public class AnnotationJPQLMgr {
                 .setParameter("tid", tid)
                 .getResultList();
 
+        userTransaction.commit();
         em.close();
         emf.close();
 
@@ -68,6 +70,7 @@ public class AnnotationJPQLMgr {
                 .setParameter("web", web)
                 .getResultList();
 
+        userTransaction.commit();
         em.close();
         emf.close();
 
@@ -86,6 +89,7 @@ public class AnnotationJPQLMgr {
                 .setParameter("t", tag)
                 .getResultList();
 
+        userTransaction.commit();
         em.close();
         emf.close();
 
@@ -105,6 +109,7 @@ public class AnnotationJPQLMgr {
                 .setParameter("tid", tid)
                 .getResultList();
 
+        userTransaction.commit();
         em.close();
         emf.close();
 
@@ -123,6 +128,7 @@ public class AnnotationJPQLMgr {
 
         em.persist(a);
 
+        userTransaction.commit();
         em.close();
         emf.close();
     }
@@ -135,6 +141,7 @@ public class AnnotationJPQLMgr {
 
         em.remove(a);
 
+        userTransaction.commit();
         em.close();
         emf.close();
     }
@@ -145,13 +152,14 @@ public class AnnotationJPQLMgr {
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        List<Annotation> la = em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.website LIKE :web AND c.taggerID LIKE :tid AND c.tag LIKE :t")
+        List<Annotation> la = em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.webPage LIKE :web AND c.taggerID LIKE :tid AND c.tag LIKE :t")
                 .setParameter("id", a.getOwnerID())
                 .setParameter("web", a.getWebPage())
                 .setParameter("tid", a.getTaggerID())
                 .setParameter("t", a.getTag())
                 .getResultList();
 
+        userTransaction.commit();
         em.close();
         emf.close();
 

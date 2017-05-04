@@ -31,6 +31,7 @@ public class PersonJPQLMgr {
 
         Person p = em.find(Person.class, id);
 
+        userTransaction.commit();
         em.close();
         emf.close();
 
