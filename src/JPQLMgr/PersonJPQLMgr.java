@@ -10,13 +10,18 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import model.Person;
-import static test.Test.persistence_unit;
 
 /**
  *
  * @author Bill
  */
 public class PersonJPQLMgr {
+
+    private final String persistence_unit;
+
+    public PersonJPQLMgr(String pu) {
+        persistence_unit = pu;
+    }
 
     public Person find(String id) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);

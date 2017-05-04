@@ -5,23 +5,25 @@
  */
 package JPQLMgr;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import model.Friends;
-import model.Person;
-import static test.Test.persistence_unit;
 
 /**
  *
  * @author Bill
  */
 public class FriendsJPQLMgr {
+
+    private final String persistence_unit;
+
+    public FriendsJPQLMgr(String pu) {
+        persistence_unit = pu;
+    }
 
     public List<Friends> find(String myid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);

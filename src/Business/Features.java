@@ -23,11 +23,16 @@ import javax.persistence.NoResultException;
  */
 public class Features {
 
-    private static final PersonJPQLMgr PMGR = new PersonJPQLMgr();
-    private static final FriendsJPQLMgr FMGR = new FriendsJPQLMgr();
-    private static final AnnotationJPQLMgr AMGR = new AnnotationJPQLMgr();
+    private final PersonJPQLMgr PMGR;
+    private final FriendsJPQLMgr FMGR;
+    private final AnnotationJPQLMgr AMGR;
     private static final String MYID = "1405896";
 
+    public Features(String pu){
+        PMGR = new PersonJPQLMgr(pu);
+        FMGR = new FriendsJPQLMgr(pu);
+        AMGR = new AnnotationJPQLMgr(pu);
+    }
     public Person myDetailInformation() {
         return PMGR.find(MYID);
     }

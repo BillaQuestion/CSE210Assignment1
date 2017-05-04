@@ -18,17 +18,17 @@ import model.Person;
  *
  * @author Bill
  */
-
 //Try to use Junit
 public class Test {
 
     private final Features features;
-    public static String persistence_unit;
+    public final String persistence_unit;
 
-    public Test(String pu){
-        features = new Features();
+    public Test(String pu) {
+        features = new Features(pu);
         persistence_unit = pu;
     }
+
     public void addData() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();

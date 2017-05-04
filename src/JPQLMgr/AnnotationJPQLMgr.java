@@ -12,13 +12,18 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import model.Annotation;
-import static test.Test.persistence_unit;
 
 /**
  *
  * @author Bill
  */
 public class AnnotationJPQLMgr {
+
+    private final String persistence_unit;
+
+    public AnnotationJPQLMgr(String pu) {
+        persistence_unit = pu;
+    }
 
     public List<Annotation> find(String oid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
