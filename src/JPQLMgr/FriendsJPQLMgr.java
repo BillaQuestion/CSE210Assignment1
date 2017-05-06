@@ -44,7 +44,7 @@ public class FriendsJPQLMgr {
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        List<Friends> lf = em.createQuery("SELECT c FROM model.Friends c WHERE c.myID LIKE :myId")
+        List<Friends> lf = em.createQuery("SELECT c FROM model.Friends c WHERE c.myId LIKE :myId")
                 .setParameter("myId", myid)
                 .getResultList();
 
@@ -63,17 +63,19 @@ public class FriendsJPQLMgr {
 
         Friends f;
         try {
-            f = (Friends) em.createQuery("SELECT c FROM model.Friends c WHERE c.myID LIKE :myId AND c.friendId LIKE :friendId")
+            f = (Friends) em.createQuery("SELECT c FROM model.Friends c WHERE c.myId LIKE :myId AND c.friendId LIKE :friendId")
                     .setParameter("myId", myId)
                     .setParameter("friendId", friendId)
-                    .getSingleResult();
+                    .getSingleResult();            userTransaction.commit();
+
         } catch (NoResultException nre) {
-            f = (Friends) em.createQuery("SELECT c FROM model.Friends c WHERE c.myID LIKE :myId AND c.friendId LIKE :friendId")
+            f = (Friends) em.createQuery("SELECT c FROM model.Friends c WHERE c.myId LIKE :myId AND c.friendId LIKE :friendId")
                     .setParameter("myId", friendId)
                     .setParameter("friendId", myId)
-                    .getSingleResult();
+                    .getSingleResult();            userTransaction.commit();
+
         } finally {
-            userTransaction.commit();
+//            userTransaction.commit();
             em.close();
             emf.close();
         }

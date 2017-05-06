@@ -25,19 +25,24 @@ import model.Person;
 public class Test {
 
     private final Features features;
+    private final Initialization init;
     public final String persistence_unit;
 
     public Test(String pu) {
         features = new Features(pu);
         persistence_unit = pu;
+        init = new Initialization(pu);
     }
 
     public void initialization() {
-        Initialization i = new Initialization(persistence_unit);
         try {
-            i.addFreinds("1405898");
-        } catch (RollbackException re) {
-            System.out.println("Exception catch.");
+            init.addFreinds("1234");
+//            Annotation a = new Annotation("1405896","test","test.com","1405896");
+//            init.addAnnotation(a);
+//        } catch (RollbackException re) {
+//            System.out.println("Exception catch.");
+        } catch (EntityExistsException eee){
+            System.out.println("exception");
         }
     }
 
@@ -56,17 +61,7 @@ public class Test {
     }
 
     public void personAddTest() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction userTransaction = em.getTransaction();
-        userTransaction.begin();
-
-        Person p = new Person("1405896", "Shiyao Zhang", Person.COURSES.DMT, "shiyao.zhang14@student.xjtlu.edu.cn");
-        em.persist(p);
-
-        userTransaction.commit();
-        em.close();
-        emf.close();
+        init.insertOwnRecord();
     }
 
     public void friendsAddTest() {
@@ -75,7 +70,7 @@ public class Test {
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        Friends f = new Friends("1405896", "1405898");
+        Friends f = new Friends("1405896", "000");
         em.persist(f);
 
         userTransaction.commit();
