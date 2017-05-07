@@ -18,15 +18,15 @@ This table stores the information about the annotations. An annotation represent
 To simplify the application design, it is assumed that:
 * When a Web page is shared, an annotation record must be added to the table ANNOTATION (taggerID is the same as OwnerID). 
 * A user can add more than one tag to a Web page no mater created by him/her or his/her friends.
-* A user can view and add annotations published by himself/herself and his/her friends; but he/she can only remove annotations published by himself/herself or he/she is the owner of the Web page. Other people’s data should NOT be visible to him/her.
+* A user can view and add annotations published by himself/herself and his/her friends; but he/she can only remove annotations published by himself/herself or he/she is the owner of the Web page. Other peopleâ€™s data should NOT be visible to him/her.
 * One user can only share/publish a Web page once; while different users can share/publish the same Web page.
 * Different users can use the same tag to annotate the same Web page.
 * Duplicate annotations are not allowed.
 ## Objects needed for the Application
 You need to design a number of information objects to represent the objects and the needed methods for this application. You need to design a class(es) for the testing purposes and some other helper classes in order to realise the functionalities (as specified below). You are welcome to have your own design following good programming practice and style.
-* Person �?represents the relevant information about a user;
-* Tag �?represents a tag;
-* Annotation �?represents the information about a tagging process, as explained above.
+* Person â€?represents the relevant information about a user;
+* Tag â€?represents a tag;
+* Annotation â€?represents the information about a tagging process, as explained above.
 # Tasks
 You should complete the following tasks. 
 1. Develop information objects and helper classes (with their methods) needed for this application with good coding style (e.g., object orientation, source code, functional decomposition), and design an easy-to-use interface for testing (using the command window is enough).
