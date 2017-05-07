@@ -35,18 +35,6 @@ public class Test {
         init = new Initialization(pu);
     }
 
-    public void initialization() {
-        try {
-            init.addFreinds("1234");
-//            Annotation a = new Annotation("1405896","test","test.com","1405896");
-//            init.addAnnotation(a);
-//        } catch (RollbackException re) {
-//            System.out.println("Exception catch.");
-        } catch (EntityExistsException eee) {
-            System.out.println("exception");
-        }
-    }
-
     public void addData() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
@@ -171,15 +159,23 @@ public class Test {
         features.removeAnnotation(tag, web);
     }
 
-    private void addMyInformation() {
+    public void addMyInformation() {
         init.insertOwnRecord();
     }
 
-    private void addFriends(String fid) {
-        init.addFreinds(fid);
+    public void addFriends(String fid) {
+        try {
+            init.addFreinds(fid);
+        } catch (EntityExistsException eee) {
+            System.out.println("exception");
+        }
     }
 
-    private void addAnnotation(Annotation a) {
-        init.addAnnotation(a);
+    public void addAnnotation(Annotation a) {
+        try {
+            init.addAnnotation(a);
+        } catch (RollbackException re) {
+            System.out.println("Exception catch.");
+        }
     }
 }
