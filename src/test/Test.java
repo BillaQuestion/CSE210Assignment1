@@ -159,11 +159,11 @@ public class Test {
         features.removeAnnotation(tag, web);
     }
 
-    public void addMyInformation() {
+    public void initAddMyInformation() {
         init.insertOwnRecord();
     }
 
-    public void addFriends(String fid) {
+    public void initAddFriends(String fid) {
         try {
             init.addFreinds(fid);
         } catch (EntityExistsException eee) {
@@ -171,7 +171,7 @@ public class Test {
         }
     }
 
-    public void addAnnotation(Annotation a) {
+    public void initAddAnnotation(Annotation a) {
         try {
             init.addAnnotation(a);
         } catch (RollbackException re) {
