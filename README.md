@@ -24,22 +24,22 @@ To simplify the application design, it is assumed that:
 * Duplicate annotations are not allowed.
 ## Objects needed for the Application
 You need to design a number of information objects to represent the objects and the needed methods for this application. You need to design a class(es) for the testing purposes and some other helper classes in order to realise the functionalities (as specified below). You are welcome to have your own design following good programming practice and style.
-* Person â€“ represents the relevant information about a user;
-* Tag â€“ represents a tag;
-* Annotation â€“ represents the information about a tagging process, as explained above.
+* Person â€?represents the relevant information about a user;
+* Tag â€?represents a tag;
+* Annotation â€?represents the information about a tagging process, as explained above.
 # Tasks
 You should complete the following tasks. 
 1. Develop information objects and helper classes (with their methods) needed for this application with good coding style (e.g., object orientation, source code, functional decomposition), and design an easy-to-use interface for testing (using the command window is enough).
 2. Consider efficiency and robustness in your coding (e.g., exception handling and data structures)
 3. Complete the following tasks which will be checked and marked during the demonstration sessions. You should design a method for each of the tasks (that method may call other methods).
 Note: FAILING TO PRESENT AT THE DEMONSTRATION SESSION WILL RESULT IN ZERO MARK FOR TESTING.
-  * Show detailed information (e.g., ID, name, course, and email) about yourself.
-  * Show detailed information about all your friends.
-  * Show all the Web pages that you have published. 
-  * Show all the personal tags (duplicates should be removed), i.e., all the tags that have been added by you in the database.
-  * Show Web pages published by all of your friends.
-  * Show all tags that have been used to annotate a Web page whose owner is you or a friend. Duplicates should be removed. (Hint: this method should accept the following parameters: a Web page in terms of URL string and an ID). 
-  * Show all annotations for a Web page whose owner is you or a friend, sorted chronologically according to the datetime.
-  * Add an annotation to a Web page whose owner is you or a friend. Note: duplicates, i.e., same annotations (excluding datetime) are NOT allowed.
-  * Remove an annotation(s) of a Web page. This method should receive the two parameters: Web page (URL) and a tag. Note that if you are the owner of this page, then all the annotations with the tag should be removed. If you are the tagger, only the annotation created by you is removed. 
+    * Show detailed information (e.g., ID, name, course, and email) about yourself.
+    * Show detailed information about all your friends.
+    * Show all the Web pages that you have published. 
+    * Show all the personal tags (duplicates should be removed), i.e., all the tags that have been added by you in the database.
+    * Show Web pages published by all of your friends.
+    * Show all tags that have been used to annotate a Web page whose owner is you or a friend. Duplicates should be removed. (Hint: this method should accept the following parameters: a Web page in terms of URL string and an ID). 
+    * Show all annotations for a Web page whose owner is you or a friend, sorted chronologically according to the datetime.
+    * Add an annotation to a Web page whose owner is you or a friend. Note: duplicates, i.e., same annotations (excluding datetime) are NOT allowed.
+    * Remove an annotation(s) of a Web page. This method should receive the two parameters: Web page (URL) and a tag. Note that if you are the owner of this page, then all the annotations with the tag should be removed. If you are the tagger, only the annotation created by you is removed. 
 4. Use Javadoc comments to document your codes and generate HTML javadoc.
