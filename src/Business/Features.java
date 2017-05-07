@@ -11,9 +11,6 @@ import java.util.ListIterator;
 import model.Person;
 import model.Friends;
 import model.Annotation;
-import JPQLMgr.PersonJPQLMgr;
-import JPQLMgr.FriendsJPQLMgr;
-import JPQLMgr.AnnotationJPQLMgr;
 import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
 
@@ -116,7 +113,7 @@ public class Features extends Business {
 
     public List<Annotation> allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(String web, String oid) {
         tryIfICanSeeThisAnnotation(web, oid);
-        List<Annotation> la = AMGR.find(oid, web);
+        List<Annotation> la = AMGR.find(oid, web);//exception?
 
         la.sort((Object o1, Object o2) -> {
             Annotation a1 = (Annotation) o1;
@@ -127,13 +124,13 @@ public class Features extends Business {
     }
 
     //EntityExistsException when 
-    public void addAnnotation(String oid, String web, String t) throws EntityExistsException {
+    public void addAnnotation(String oid, String web, String tag) throws EntityExistsException {
         tryIfICanSeeThisAnnotation(web, oid);
-        Annotation a = new Annotation(MY_ID, t, web, oid);
+        Annotation a = new Annotation(MY_ID, tag, web, oid);
         AMGR.add(a);
     }
 
-    public void removeAnnotation(String tag, String web) {
+    public void removeAnnotation(String tag, String web) {  //write AMTR.remove(My_ID, web,tag);
         List<Annotation> la = AMGR.find(MY_ID, web, tag);
         if (!la.isEmpty()) {
             ListIterator<Annotation> it = la.listIterator();

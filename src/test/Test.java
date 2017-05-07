@@ -7,6 +7,7 @@ package test;
 
 import Business.Features;
 import Business.Initialization;
+import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -41,7 +42,7 @@ public class Test {
 //            init.addAnnotation(a);
 //        } catch (RollbackException re) {
 //            System.out.println("Exception catch.");
-        } catch (EntityExistsException eee){
+        } catch (EntityExistsException eee) {
             System.out.println("exception");
         }
     }
@@ -78,31 +79,107 @@ public class Test {
         emf.close();
     }
 
-    public void annotationAddTest() {
+    public void myDetailInformation() {
+        Person p = features.myDetailInformation();
+        System.out.println("My Detail Information");
+        System.out.println("========================");
+        System.out.println(p.getID());
+        System.out.println(p.getName());
+        System.out.println(p.getCourse());
+        System.out.println(p.getEmail());
+        System.out.println("========================");
+    }
+
+    public void allMyFriendsDetailInformation() {
+        List<Person> lp = features.allMyFriendsDetailInformation();
+        System.out.println("All My Friends' Detail Information");
+        while (!lp.isEmpty()) {
+            Person p = lp.remove(0);
+            System.out.println("========================");
+            System.out.println(p.getID());
+            System.out.println(p.getName());
+            System.out.println(p.getCourse());
+            System.out.println(p.getEmail());
+            System.out.println("========================");
+        }
+    }
+
+    public void allMyWebpages() {
+        List<String> lw = features.allMyWebpages();
+        System.out.println("All My Webpages");
+        System.out.println("========================");
+        while (!lw.isEmpty()) {
+            System.out.println(lw.remove(0));
+        }
+        System.out.println("========================");
+    }
+
+    public void allMyTags() {
+        List<String> lt = features.allMyTags();
+        System.out.println("All My Tags");
+        System.out.println("========================");
+        while (!lt.isEmpty()) {
+            System.out.println(lt.remove(0));
+        }
+        System.out.println("========================");
+    }
+
+    public void allFriendsWebsite() {
+        List<String> lw = features.allFriendsWebsite();
+        System.out.println("All My Friends' Webpages");
+        System.out.println("========================");
+        while (!lw.isEmpty()) {
+            System.out.println(lw.remove(0));
+        }
+        System.out.println("========================");
+    }
+
+    public void allTagsForAWebpageICanSee(String webpage, String oid) {
+        List<String> lt = features.allTagsForAWebsitePublishedByFriendOrMyself(webpage, oid);
+        System.out.println("All Tags I can See for This Webpage");
+        System.out.println("========================");
+        while (!lt.isEmpty()) {
+            System.out.println(lt.remove(0));
+        }
+        System.out.println("========================");
+    }
+
+    public void allAnnotationsForAWebpageICanSee(String web, String oid) {
+        List<Annotation> la = features.allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(web, oid);
+        System.out.println("All Annotations I can See for This Webpage");
+        while (!la.isEmpty()) {
+            System.out.println("========================");
+            Annotation a = la.remove(0);
+            System.out.println(a.getDatetime().toString());
+            System.out.println(a.getOwnerID());
+            System.out.println(a.getWebPage());
+            System.out.println(a.getTaggerID());
+            System.out.println(a.getTag());
+        }
+        System.out.println("========================");
+    }
+
+    public void addAnnotationToAWebpageICanSee(String oid, String web, String tag) {
         try {
-            features.addAnnotation("1405896", "testWeb", "testTag");
+            features.addAnnotation(oid, web, tag);
         } catch (EntityExistsException ee) {
             System.out.println("Exception catch.");
         }
     }
 
-    public void myDetailInformationTest() {
-        features.myDetailInformation();
+    public void removeAnnotation(String tag, String web) {
+        features.removeAnnotation(tag, web);
     }
 
-    public void allMyFriendsDetailInformationTest() {
-        features.allMyFriendsDetailInformation();
+    private void addMyInformation() {
+        init.insertOwnRecord();
     }
 
-    public void allMyWebpagesTest() {
-        features.allMyWebpages();
+    private void addFriends(String fid) {
+        init.addFreinds(fid);
     }
 
-    public void allMyTagsTest() {
-        features.allMyTags();
-    }
-
-    public void allFriendsWebsiteTest() {
-        features.allFriendsWebsite();
+    private void addAnnotation(Annotation a) {
+        init.addAnnotation(a);
     }
 }
