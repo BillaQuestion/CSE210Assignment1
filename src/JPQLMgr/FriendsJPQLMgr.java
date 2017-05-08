@@ -40,7 +40,7 @@ public class FriendsJPQLMgr {
         emf.close();
     }
 
-    public Set<Friends> find(String myid) {
+    public Set<Friends> findFriends(String myid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
@@ -58,7 +58,7 @@ public class FriendsJPQLMgr {
         return sf1;
     }
 
-    public void tryIsFriend(String myId, String friendId) throws NoResultException {
+    public void tryFriend(String myId, String friendId) throws NoResultException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();

@@ -47,7 +47,7 @@ public class InitializeData extends Business {
 
     public void addFreinds(String fid) {
         try {
-            FMGR.tryIsFriend(MY_ID, fid);
+            FMGR.tryFriend(MY_ID, fid);
             System.out.println("We've already been friends!");
         } catch (NoResultException nre) {
             FMGR.add(MY_ID, fid);

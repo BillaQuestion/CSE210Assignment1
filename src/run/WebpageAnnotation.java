@@ -28,11 +28,13 @@ public class WebpageAnnotation {
         InitializeData i = new InitializeData(PERSISTENCE_UNIT);
         UI ui = new UI(f, i);
 //        ui.agile();
+        ui.allTagsForAWebpageICanSee("www.t4.com", "ljlijoj");
 //        ui.myDetailInformation();
 //        ui.allMyFriendsDetailInformation();
 //        ui.allMyWebpages();
 //        ui.allFriendsWebsite();
-        ui.allMyTags();
+//        ui.allMyTags();
+//        ui.addFriends("1405462");
     }
 
     private static void addData() {

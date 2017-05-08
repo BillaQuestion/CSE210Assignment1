@@ -80,7 +80,7 @@ public class AnnotationJPQLMgr {
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        List<Annotation> la = em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.website LIKE :web")
+        List<Annotation> la = em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.webPage LIKE :web")
                 .setParameter("id", oid)
                 .setParameter("web", web)
                 .getResultList();

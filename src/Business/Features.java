@@ -36,7 +36,7 @@ public class Features extends Business {
     }
 
     public List<Person> allFriendsDetailInformation(String id) {
-        Set<Friends> sf = FMGR.find(id);
+        Set<Friends> sf = FMGR.findFriends(id);
         List<Person> lp = new ArrayList<>();
         for (Friends f : sf) {
             String fid = f.getFriendID();
@@ -81,8 +81,12 @@ public class Features extends Business {
         return ls;
     }
 
-    public Set<IdWebpage> allFriendsWebsite() {
-        Set<Friends> sf = FMGR.find(MY_ID);
+    public Set<IdWebpage> allMyFriendsWebsite() {
+        return allFriendsWebsite(MY_ID);
+    }
+
+    public Set<IdWebpage> allFriendsWebsite(String id) {
+        Set<Friends> sf = FMGR.findFriends(id);
         Set<IdWebpage> sa = new HashSet();
         for (Friends f : sf) {
             Set<IdWebpage> lfa = allWebpages(f.getFriendID());
@@ -92,7 +96,7 @@ public class Features extends Business {
         return sa;
     }
 
-    public List<String> allTagsForAWebsitePublishedByFriendOrMyself(String web, String oid) {
+    public List<String> allTagsForAWebsitePublishedByFriendOrMyself(String web, String oid) throws NoResultException {
         List<Annotation> la = allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(web, oid);
         ListIterator<Annotation> it = la.listIterator();
         ArrayList<String> lw = new ArrayList<>();
@@ -105,8 +109,8 @@ public class Features extends Business {
         return lw;
     }
 
-    public List<Annotation> allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(String web, String oid) {
-        tryIfICanSeeThisAnnotation(web, oid);
+    public List<Annotation> allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(String web, String oid) throws NoResultException {
+        tryFriend(oid);
         List<Annotation> la = AMGR.find(oid, web);//exception?
 
         la.sort((Object o1, Object o2) -> {
@@ -119,7 +123,7 @@ public class Features extends Business {
 
     //EntityExistsException when 
     public void addAnnotation(String oid, String web, String tag) throws EntityExistsException {
-        tryIfICanSeeThisAnnotation(web, oid);
+        tryFriend(oid);
         Annotation a = new Annotation(MY_ID, tag, web, oid);
         AMGR.add(a);
     }
@@ -132,7 +136,7 @@ public class Features extends Business {
                 AMGR.remove(it.next());
             }
         }
-        Set<Friends> sf = FMGR.find(MY_ID);
+        Set<Friends> sf = FMGR.findFriends(MY_ID);
         if (!sf.isEmpty()) {
             for (Friends f : sf) {
                 AMGR.remove(f.getFriendID(), web, tag, MY_ID);
@@ -141,13 +145,9 @@ public class Features extends Business {
 
     }
 
-    private void tryIfICanSeeThisAnnotation(String web, String id) {
+    private void tryFriend(String id) throws NoResultException {
         if (!id.equals(MY_ID)) {
-            try {
-                FMGR.tryIsFriend(MY_ID, id);
-            } catch (NoResultException nre) {
-                throw new NoResultException("I cannot see website of a stranger.");
-            }
+            FMGR.tryFriend(MY_ID, id);
         }
     }
 }

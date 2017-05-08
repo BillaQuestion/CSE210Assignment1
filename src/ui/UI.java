@@ -13,6 +13,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
 import model.Annotation;
@@ -36,9 +37,15 @@ public class UI {
     }
 
     public void agile() {
-        init.addAnnotation("1405896", "Good website", "www.t4.com", "1405052");
+        Set<IdWebpage> lw = features.allFriendsWebsite("12345432");
+        System.out.println("All My Friends' Webpages");
+        System.out.println("========================");
+        for (IdWebpage a : lw) {
+            System.out.println(a.getID() + "\t\t" + a.getWebPage());
+        }
+        System.out.println("========================");
     }
-    
+
     public void myDetailInformation() {
         Person p = features.myDetailInformation();
         if (p == null) {
@@ -96,7 +103,7 @@ public class UI {
     }
 
     public void allFriendsWebsite() {
-        Set<IdWebpage> lw = features.allFriendsWebsite();
+        Set<IdWebpage> lw = features.allMyFriendsWebsite();
         System.out.println("All My Friends' Webpages");
         System.out.println("========================");
         for (IdWebpage a : lw) {
@@ -106,13 +113,23 @@ public class UI {
     }
 
     public void allTagsForAWebpageICanSee(String webpage, String oid) {
-        List<String> lt = features.allTagsForAWebsitePublishedByFriendOrMyself(webpage, oid);
-        System.out.println("All Tags I can See for This Webpage");
-        System.out.println("========================");
-        while (!lt.isEmpty()) {
-            System.out.println(lt.remove(0));
+        try {
+            List<String> lt = features.allTagsForAWebsitePublishedByFriendOrMyself(webpage, oid);
+            System.out.println("All Tags for This Webpage");
+            System.out.println("========================");
+//            if (lt.isEmpty()) {
+//                System.out.println("Website does not exist!");
+//            }
+            while (!lt.isEmpty()) {
+                System.out.println(lt.remove(0));
+            }
+        } catch (NoResultException nre) {
+            System.out.println("All Tags for This Webpage");
+            System.out.println("========================");
+            System.out.println("I cannot see website of a stranger.");
+        } finally {
+            System.out.println("========================");
         }
-        System.out.println("========================");
     }
 
     public void allAnnotationsForAWebpageICanSee(String web, String oid) {
