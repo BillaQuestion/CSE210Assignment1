@@ -5,7 +5,9 @@
  */
 package JPQLMgr;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -38,13 +40,13 @@ public class FriendsJPQLMgr {
         emf.close();
     }
 
-    public List<Friends> find(String myid) {
+    public Set<Friends> find(String myid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        List<Friends> lf = em.createQuery("SELECT c FROM model.Friends c WHERE c.myId LIKE :myId")
+        List<Friends> lf1 = em.createQuery("SELECT c FROM model.Friends c WHERE c.myId LIKE :myId")
                 .setParameter("myId", myid)
                 .getResultList();
 
@@ -52,7 +54,8 @@ public class FriendsJPQLMgr {
         em.close();
         emf.close();
 
-        return lf;
+        Set<Friends> sf1 = new HashSet(lf1);
+        return sf1;
     }
 
     public void tryIsFriend(String myId, String friendId) throws NoResultException {
@@ -66,13 +69,15 @@ public class FriendsJPQLMgr {
             f = (Friends) em.createQuery("SELECT c FROM model.Friends c WHERE c.myId LIKE :myId AND c.friendId LIKE :friendId")
                     .setParameter("myId", myId)
                     .setParameter("friendId", friendId)
-                    .getSingleResult();            userTransaction.commit();
+                    .getSingleResult();
+            userTransaction.commit();
 
         } catch (NoResultException nre) {
             f = (Friends) em.createQuery("SELECT c FROM model.Friends c WHERE c.myId LIKE :myId AND c.friendId LIKE :friendId")
                     .setParameter("myId", friendId)
                     .setParameter("friendId", myId)
-                    .getSingleResult();            userTransaction.commit();
+                    .getSingleResult();
+            userTransaction.commit();
 
         } finally {
 //            userTransaction.commit();

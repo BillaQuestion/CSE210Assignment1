@@ -29,15 +29,18 @@ public class InitializeData extends Business {
 
     //Exception when someone play with you
     public void addMyRecord() throws IllegalArgumentException {
-//        try {
-        Person p = PMGR.find(MY_ID);
+        addPerson(MY_ID, MY_NAME, MY_COURSE, MY_EMAIL);
+    }
+
+    public void addPerson(String id, String name, Person.COURSES course, String email) {
+        Person p = PMGR.find(id);
         if (p == null) {
-            PMGR.add(new Person(MY_ID, MY_NAME, MY_COURSE, MY_EMAIL));
+            PMGR.add(new Person(id, name, course, email));
         } else {
-            p.setCourse(MY_COURSE);
-            p.setEmail(MY_EMAIL);
-            p.setID(MY_ID);
-            p.setName(MY_NAME);
+            p.setCourse(course);
+            p.setEmail(email);
+            p.setID(id);
+            p.setName(name);
             PMGR.modify(p);
         }
     }

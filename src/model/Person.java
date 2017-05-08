@@ -19,6 +19,7 @@ public class Person implements Serializable {
      * All possibles of {@link #course course}.
      */
     public static enum COURSES {
+        NULL,
         ICS,
         CST,
         DMT

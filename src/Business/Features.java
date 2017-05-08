@@ -8,6 +8,7 @@ package Business;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 import model.Person;
 import model.Friends;
 import model.Annotation;
@@ -29,37 +30,40 @@ public class Features extends Business {
     }
 
     public List<Person> allMyFriendsDetailInformation() {
-        List<Friends> lf = FMGR.find(MY_ID);
+        return allFriendsDetailInformation(MY_ID);
+    }
 
+    public List<Person> allFriendsDetailInformation(String id) {
+        Set<Friends> sf = FMGR.find(id);
         List<Person> lp = new ArrayList<>();
-        ListIterator<Friends> it = lf.listIterator();
-        while (it.hasNext()) {
-            String fid = it.next().getFriendID();
+        for (Friends f : sf) {
+            String fid = f.getFriendID();
             Person p = PMGR.find(fid);
-            try {
-                lp.add(p);
-            } catch (NullPointerException e) {
-                //if the friend is not registered, 
-                //add a Person with ID only to the return list
-                Person np = new Person();
-                np.setID(fid);
-                lp.add(np);
+            if (p == null) {
+                p = new Person();
+                p.setCourse(Person.COURSES.NULL);
+                p.setEmail("null");
+                p.setName("null");
+                p.setID(fid);
             }
+            lp.add(p);
         }
 
         return lp;
     }
 
     public List<String> allMyWebpages() {
-        List<Annotation> la = AMGR.find(MY_ID);
+        return allWebpages(MY_ID);
+    }
 
+    public List<String> allWebpages(String id) {
+        List<Annotation> la = AMGR.find(id);
         ArrayList<String> ls = new ArrayList<>();
         ListIterator<Annotation> it = la.listIterator();
         while (it.hasNext()) {
             String web = it.next().getWebPage();
             ls.add(web);
         }
-
         return ls;
     }
 
@@ -79,12 +83,10 @@ public class Features extends Business {
     }
 
     public List<String> allFriendsWebsite() {
-        List<Friends> lf = FMGR.find(MY_ID);
-
+        Set<Friends> sf = FMGR.find(MY_ID);
         ArrayList<String> lw = new ArrayList<>();
-        ListIterator<Friends> it = lf.listIterator();
-        while (it.hasNext()) {
-            String fid = it.next().getFriendID();
+        for (Friends f : sf) {
+            String fid = f.getFriendID();
             List<Annotation> lfa = AMGR.find(fid);
             ListIterator<Annotation> itlfa = lfa.listIterator();
             while (itlfa.hasNext()) {
@@ -138,13 +140,14 @@ public class Features extends Business {
                 AMGR.remove(it.next());
             }
         }
-        List<Friends> lf = FMGR.find(MY_ID);
-        ListIterator<Friends> it = lf.listIterator();
-        while (it.hasNext()) {
-            la = AMGR.find(it.next().getFriendID(), web, tag, MY_ID);
-            ListIterator<Annotation> ita = la.listIterator();
-            while (it.hasNext()) {
-                AMGR.remove(ita.next());
+        Set<Friends> sf = FMGR.find(MY_ID);
+        if (!sf.isEmpty()) {
+            for (Friends f : sf) {
+                la = AMGR.find(f.getFriendID(), web, tag, MY_ID);
+                ListIterator<Annotation> it = la.listIterator();
+                while (it.hasNext()) {
+                    AMGR.remove(it.next());
+                }
             }
         }
 

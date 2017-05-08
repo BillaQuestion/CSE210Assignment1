@@ -27,74 +27,55 @@ public class UI {
 
     private final Features features;
     private final InitializeData init;
-    public final String persistence_unit;
 
-    public UI(String pu) {
-        features = new Features(pu);
-        persistence_unit = pu;
-        init = new InitializeData(pu);
+    public UI(Features f, InitializeData i) {
+        features = f;
+        init = i;
     }
 
     public void agile() {
-        Person p = features.myDetailInformation();
+        List<Person> lp = features.allFriendsDetailInformation("12345678901");
+        System.out.println("All My Friends' Detail Information");
         System.out.println("========================");
-        System.out.println(p.getID());
-        System.out.println(p.getName());
-        System.out.println(p.getCourse());
-        System.out.println(p.getEmail());
-        System.out.println("========================");
-    }
+        if (lp.isEmpty()) {
+            System.out.println("I don't have a friend.");
+            System.out.println("Maybe friends forgot adding double direction relationship.");
+            System.out.println("========================");
 
-    public void addData() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction userTransaction = em.getTransaction();
-        userTransaction.begin();
-
-        Friends f = new Friends("1405896", "1405897");
-        em.persist(f);
-
-        userTransaction.commit();
-        em.close();
-        emf.close();
-    }
-
-    public void personAddTest() {
-        init.addMyRecord();
-    }
-
-    public void friendsAddTest() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction userTransaction = em.getTransaction();
-        userTransaction.begin();
-
-        Friends f = new Friends("1405896", "000");
-        em.persist(f);
-
-        userTransaction.commit();
-        em.close();
-        emf.close();
+        }
+        while (!lp.isEmpty()) {
+            Person p = lp.remove(0);
+            System.out.println("ID: " + p.getID());
+            System.out.println("Name: " + p.getName());
+            System.out.println("Program: " + p.getCourse());
+            System.out.println("Email: " + p.getEmail());
+            System.out.println("========================");
+        }
     }
 
     public void myDetailInformation() {
         Person p = features.myDetailInformation();
         if (p == null) {
             System.out.println("My detail information is not in the database!");
+        } else {
+            System.out.println("My Detail Information");
+            System.out.println("========================");
+            System.out.println("ID: " + p.getID());
+            System.out.println("Name: " + p.getName());
+            System.out.println("Program: " + p.getCourse());
+            System.out.println("Email: " + p.getEmail());
+            System.out.println("========================");
         }
-        System.out.println("My Detail Information");
-        System.out.println("========================");
-        System.out.println("ID: " + p.getID());
-        System.out.println("Name: " + p.getName());
-        System.out.println("Program: " + p.getCourse());
-        System.out.println("Email: " + p.getEmail());
-        System.out.println("========================");
     }
 
     public void allMyFriendsDetailInformation() {
         List<Person> lp = features.allMyFriendsDetailInformation();
         System.out.println("All My Friends' Detail Information");
         System.out.println("========================");
+        if (lp.isEmpty()) {
+            System.out.println("I don't have a friend.");
+            System.out.println("Maybe friends forgot add double direction relationship.");
+        }
         while (!lp.isEmpty()) {
             Person p = lp.remove(0);
             System.out.println("ID: " + p.getID());
@@ -109,6 +90,9 @@ public class UI {
         List<String> lw = features.allMyWebpages();
         System.out.println("All My Webpages");
         System.out.println("========================");
+        if (lw.isEmpty()) {
+            System.out.println("No Webpage Published.");
+        }
         while (!lw.isEmpty()) {
             System.out.println(lw.remove(0));
         }
@@ -151,7 +135,7 @@ public class UI {
         while (!la.isEmpty()) {
             System.out.println("========================");
             Annotation a = la.remove(0);
-            System.out.println("Datetime: "+a.getDatetime().toString());
+            System.out.println("Datetime: " + a.getDatetime().toString());
             System.out.println(a.getOwnerID());
             System.out.println(a.getWebPage());
             System.out.println(a.getTaggerID());
@@ -172,11 +156,11 @@ public class UI {
         features.removeAnnotation(tag, web);
     }
 
-    public void initAddMyInformation() {
+    public void addMyInformation() {
         init.addMyRecord();
     }
 
-    public void initAddFriends(String fid) {
+    public void addFriends(String fid) {
         try {
             init.addFreinds(fid);
         } catch (EntityExistsException eee) {
@@ -184,11 +168,15 @@ public class UI {
         }
     }
 
-    public void initAddAnnotation(Annotation a) {
+    public void addAnnotation(Annotation a) {
         try {
             init.addAnnotation(a);
         } catch (RollbackException re) {
             System.out.println("Exception catch.");
         }
+    }
+
+    public void addPerson(String id, String name, Person.COURSES course, String email) {
+        init.addPerson(id, name, course, email);
     }
 }
