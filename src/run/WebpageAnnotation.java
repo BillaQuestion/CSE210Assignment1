@@ -2,6 +2,7 @@ package run;
 
 import Business.Features;
 import Business.InitializeData;
+import java.sql.Timestamp;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -28,7 +29,8 @@ public class WebpageAnnotation {
         InitializeData i = new InitializeData(PERSISTENCE_UNIT);
         UI ui = new UI(f, i);
 //        ui.agile();
-        ui.allTagsForAWebpageICanSee("www.t4.com", "ljlijoj");
+//        ui.allTagsForAWebpageICanSee("www.t4.com", "1405052");
+        ui.allAnnotationsForAWebpageICanSee("www.t4.com", "1405052");
 //        ui.myDetailInformation();
 //        ui.allMyFriendsDetailInformation();
 //        ui.allMyWebpages();
@@ -45,7 +47,8 @@ public class WebpageAnnotation {
 
 //        Friends f = new Friends("123456", "1405896");
 //        em.persist(f);
-        Annotation a = new Annotation("1405896", "Good website", "www.t4.com", "1405052");
+        Annotation a = new Annotation("1405896", "Good good website", "www.t4.com", "1405052");      
+        a.setDatetime(new Timestamp(10000000));
         em.persist(a);
 
         userTransaction.commit();

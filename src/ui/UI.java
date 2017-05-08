@@ -117,34 +117,45 @@ public class UI {
             List<String> lt = features.allTagsForAWebsitePublishedByFriendOrMyself(webpage, oid);
             System.out.println("All Tags for This Webpage");
             System.out.println("========================");
-//            if (lt.isEmpty()) {
-//                System.out.println("Website does not exist!");
-//            }
+            if (lt.isEmpty()) {
+                System.out.println("Webpage does not exist.");
+            }
             while (!lt.isEmpty()) {
                 System.out.println(lt.remove(0));
             }
         } catch (NoResultException nre) {
             System.out.println("All Tags for This Webpage");
             System.out.println("========================");
-            System.out.println("I cannot see website of a stranger.");
+            System.out.println("You cannot see website created by a stranger.");
         } finally {
             System.out.println("========================");
         }
     }
 
     public void allAnnotationsForAWebpageICanSee(String web, String oid) {
-        List<Annotation> la = features.allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(web, oid);
-        System.out.println("All Annotations I can See for This Webpage");
-        while (!la.isEmpty()) {
+        try {
+            List<Annotation> la = features.allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(web, oid);
+            System.out.println("All Annotations I can See for This Webpage");
             System.out.println("========================");
-            Annotation a = la.remove(0);
-            System.out.println("Datetime: " + a.getDatetime().toString());
-            System.out.println(a.getOwnerID());
-            System.out.println(a.getWebPage());
-            System.out.println(a.getTaggerID());
-            System.out.println(a.getTag());
+            if (la.isEmpty()) {
+                System.out.println("Webpage does not exist.");
+                System.out.println("========================");
+            }
+            while (!la.isEmpty()) {
+                Annotation a = la.remove(0);
+                System.out.println("Datetime: " + a.getDatetime().toString());
+                System.out.println("Owner ID: " + a.getOwnerID());
+                System.out.println("Webpage: " + a.getWebPage());
+                System.out.println("Tagger ID: " + a.getTaggerID());
+                System.out.println("Tag: " + a.getTag());
+                System.out.println("========================");
+            }
+        } catch (NoResultException nre) {
+            System.out.println("All Annotations I can See for This Webpage");
+            System.out.println("========================");
+            System.out.println("You cannot see website created by a stranger.");
+            System.out.println("========================");
         }
-        System.out.println("========================");
     }
 
     public void addAnnotationToAWebpageICanSee(String oid, String web, String tag) {
