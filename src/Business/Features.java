@@ -14,6 +14,7 @@ import model.Person;
 import model.Friends;
 import model.Annotation;
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import model.IdWebpage;
 
@@ -122,10 +123,15 @@ public class Features extends Business {
     }
 
     //EntityExistsException when 
-    public void addAnnotation(String oid, String web, String tag) throws EntityExistsException {
+    public Annotation addAnnotation(String oid, String web, String tag) throws EntityExistsException {
         tryFriend(oid);
+        List<Annotation> la = AMGR.find(oid, web);
+        if(la.isEmpty()){
+            throw new EntityNotFoundException();
+        }
         Annotation a = new Annotation(MY_ID, tag, web, oid);
         AMGR.add(a);
+        return a;
     }
 
     public void removeAnnotation(String tag, String web) {  //write AMTR.remove(My_ID, web,tag);

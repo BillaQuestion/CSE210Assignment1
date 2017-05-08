@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
@@ -160,9 +161,25 @@ public class UI {
 
     public void addAnnotationToAWebpageICanSee(String oid, String web, String tag) {
         try {
-            features.addAnnotation(oid, web, tag);
+            Annotation a = features.addAnnotation(oid, web, tag);
+            System.out.println("Add Annotation");
+            System.out.println("========================");
+            System.out.println("Datetime: " + a.getDatetime().toString());
+            System.out.println("Owner ID: " + a.getOwnerID());
+            System.out.println("Webpage: " + a.getWebPage());
+            System.out.println("Tagger ID: " + a.getTaggerID());
+            System.out.println("Tag: " + a.getTag());
+            System.out.println("========================");
         } catch (EntityExistsException ee) {
-            System.out.println("Exception catch.");
+            System.out.println("Add Annotation");
+            System.out.println("========================");
+            System.out.println("Same tag has already been given.");
+            System.out.println("========================");
+        } catch (EntityNotFoundException enf) {
+            System.out.println("Add Annotation");
+            System.out.println("========================");
+            System.out.println("Webpage does not exist.");
+            System.out.println("========================");
         }
     }
 
@@ -174,7 +191,7 @@ public class UI {
         init.addMyRecord();
     }
 
-    public void addFriends(String fid) {
+    public void initAddFriends(String fid) {
         try {
             init.addFreinds(fid);
         } catch (EntityExistsException eee) {
@@ -182,7 +199,7 @@ public class UI {
         }
     }
 
-    public void addAnnotation(String ti, String t, String w, String o) {
+    public void initAddAnnotation(String ti, String t, String w, String o) {
         try {
             init.addAnnotation(ti, t, w, o);
         } catch (RollbackException re) {
@@ -190,7 +207,7 @@ public class UI {
         }
     }
 
-    public void addPerson(String id, String name, Person.COURSES course, String email) {
+    public void initAddPerson(String id, String name, Person.COURSES course, String email) {
         init.addPerson(id, name, course, email);
     }
 }
