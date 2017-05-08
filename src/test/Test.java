@@ -6,7 +6,7 @@
 package test;
 
 import Business.Features;
-import Business.Initialization;
+import Business.InitializeData;
 import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -26,13 +26,13 @@ import model.Person;
 public class Test {
 
     private final Features features;
-    private final Initialization init;
+    private final InitializeData init;
     public final String persistence_unit;
 
     public Test(String pu) {
         features = new Features(pu);
         persistence_unit = pu;
-        init = new Initialization(pu);
+        init = new InitializeData(pu);
     }
 
     public void addData() {
@@ -50,7 +50,7 @@ public class Test {
     }
 
     public void personAddTest() {
-        init.insertOwnRecord();
+        init.addMyRecord();
     }
 
     public void friendsAddTest() {
@@ -160,7 +160,7 @@ public class Test {
     }
 
     public void initAddMyInformation() {
-        init.insertOwnRecord();
+        init.addMyRecord();
     }
 
     public void initAddFriends(String fid) {

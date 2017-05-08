@@ -17,18 +17,18 @@ import model.Person;
  *
  * @author Bill
  */
-public class Initialization extends Business {
+public class InitializeData extends Business {
 
     private static final String MY_NAME = "Shiyao Zhang";
     private static final Person.COURSES MY_COURSE = Person.COURSES.DMT;
     private static final String MY_EMAIL = "Shiyao.Zhang14@student.xjtlu.edu.cn";
 
-    public Initialization(String pu) {
+    public InitializeData(String pu) {
         super(pu);
     }
 
     //Exception when someone play with you
-    public void insertOwnRecord() throws IllegalArgumentException {
+    public void addMyRecord() throws IllegalArgumentException {
 //        try {
         Person p = PMGR.find(MY_ID);
         if (p == null) {
