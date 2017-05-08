@@ -8,6 +8,7 @@ package ui;
 import Business.Features;
 import Business.InitializeData;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,6 +17,7 @@ import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
 import model.Annotation;
 import model.Friends;
+import model.IdWebpage;
 import model.Person;
 
 /**
@@ -34,25 +36,9 @@ public class UI {
     }
 
     public void agile() {
-        List<Person> lp = features.allFriendsDetailInformation("12345678901");
-        System.out.println("All My Friends' Detail Information");
-        System.out.println("========================");
-        if (lp.isEmpty()) {
-            System.out.println("I don't have a friend.");
-            System.out.println("Maybe friends forgot adding double direction relationship.");
-            System.out.println("========================");
-
-        }
-        while (!lp.isEmpty()) {
-            Person p = lp.remove(0);
-            System.out.println("ID: " + p.getID());
-            System.out.println("Name: " + p.getName());
-            System.out.println("Program: " + p.getCourse());
-            System.out.println("Email: " + p.getEmail());
-            System.out.println("========================");
-        }
+        init.addAnnotation("1405896", "Good website", "www.t4.com", "1405052");
     }
-
+    
     public void myDetailInformation() {
         Person p = features.myDetailInformation();
         if (p == null) {
@@ -87,14 +73,14 @@ public class UI {
     }
 
     public void allMyWebpages() {
-        List<String> lw = features.allMyWebpages();
+        Set<IdWebpage> sw = features.allMyWebpages();
         System.out.println("All My Webpages");
         System.out.println("========================");
-        if (lw.isEmpty()) {
+        if (sw.isEmpty()) {
             System.out.println("No Webpage Published.");
         }
-        while (!lw.isEmpty()) {
-            System.out.println(lw.remove(0));
+        for (IdWebpage a : sw) {
+            System.out.println(a.getWebPage());
         }
         System.out.println("========================");
     }
@@ -110,11 +96,11 @@ public class UI {
     }
 
     public void allFriendsWebsite() {
-        List<String> lw = features.allFriendsWebsite();
+        Set<IdWebpage> lw = features.allFriendsWebsite();
         System.out.println("All My Friends' Webpages");
         System.out.println("========================");
-        while (!lw.isEmpty()) {
-            System.out.println(lw.remove(0));
+        for (IdWebpage a : lw) {
+            System.out.println(a.getID() + "\t\t" + a.getWebPage());
         }
         System.out.println("========================");
     }
@@ -168,9 +154,9 @@ public class UI {
         }
     }
 
-    public void addAnnotation(Annotation a) {
+    public void addAnnotation(String ti, String t, String w, String o) {
         try {
-            init.addAnnotation(a);
+            init.addAnnotation(ti, t, w, o);
         } catch (RollbackException re) {
             System.out.println("Exception catch.");
         }

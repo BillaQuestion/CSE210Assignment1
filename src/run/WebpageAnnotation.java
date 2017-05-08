@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import model.Annotation;
 import model.Friends;
 import ui.UI;
 
@@ -16,36 +17,41 @@ import ui.UI;
 public class WebpageAnnotation {
 
     private static final String PERSISTENCE_UNIT = "cse210Connector";
+//    private static final String PERSISTENCE_UNIT = "testJPA";
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+//        addData();
         Features f = new Features(PERSISTENCE_UNIT);
         InitializeData i = new InitializeData(PERSISTENCE_UNIT);
-//        Test t = new Test("testJPA");
         UI ui = new UI(f, i);
-        ui.agile();
+//        ui.agile();
 //        ui.myDetailInformation();
 //        ui.allMyFriendsDetailInformation();
 //        ui.allMyWebpages();
+//        ui.allFriendsWebsite();
+        ui.allMyTags();
     }
 
-    private void addData() {
+    private static void addData() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        Friends f = new Friends("123456", "1405896");
-        em.persist(f);
+//        Friends f = new Friends("123456", "1405896");
+//        em.persist(f);
+        Annotation a = new Annotation("1405896", "Good website", "www.t4.com", "1405052");
+        em.persist(a);
 
         userTransaction.commit();
         em.close();
         emf.close();
     }
 
-    private void friendsAddTest() {
+    private static void friendsAddTest() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();

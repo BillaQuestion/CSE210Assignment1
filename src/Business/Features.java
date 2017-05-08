@@ -6,6 +6,7 @@
 package Business;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -14,6 +15,7 @@ import model.Friends;
 import model.Annotation;
 import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
+import model.IdWebpage;
 
 /**
  *
@@ -52,23 +54,20 @@ public class Features extends Business {
         return lp;
     }
 
-    public List<String> allMyWebpages() {
+    public Set<IdWebpage> allMyWebpages() {
         return allWebpages(MY_ID);
     }
 
-    public List<String> allWebpages(String id) {
-        List<Annotation> la = AMGR.find(id);
-        ArrayList<String> ls = new ArrayList<>();
-        ListIterator<Annotation> it = la.listIterator();
-        while (it.hasNext()) {
-            String web = it.next().getWebPage();
-            ls.add(web);
-        }
-        return ls;
+    public Set<IdWebpage> allWebpages(String id) {
+        return new HashSet(AMGR.findWebpageWithId(id));
     }
 
     public List<String> allMyTags() {
-        List<Annotation> la = AMGR.findByTagger(MY_ID);
+        return allTags(MY_ID);
+    }
+
+    public List<String> allTags(String id) {
+        List<Annotation> la = AMGR.findByTagger(id);
 
         ArrayList<String> ls = new ArrayList<>();
         ListIterator<Annotation> it = la.listIterator();
@@ -82,22 +81,15 @@ public class Features extends Business {
         return ls;
     }
 
-    public List<String> allFriendsWebsite() {
+    public Set<IdWebpage> allFriendsWebsite() {
         Set<Friends> sf = FMGR.find(MY_ID);
-        ArrayList<String> lw = new ArrayList<>();
+        Set<IdWebpage> sa = new HashSet();
         for (Friends f : sf) {
-            String fid = f.getFriendID();
-            List<Annotation> lfa = AMGR.find(fid);
-            ListIterator<Annotation> itlfa = lfa.listIterator();
-            while (itlfa.hasNext()) {
-                String web = itlfa.next().getWebPage();
-                if (!lw.contains(web)) {
-                    lw.add(web);
-                }
-            }
+            Set<IdWebpage> lfa = allWebpages(f.getFriendID());
+            sa.addAll(lfa);
         }
 
-        return lw;
+        return sa;
     }
 
     public List<String> allTagsForAWebsitePublishedByFriendOrMyself(String web, String oid) {
@@ -143,11 +135,7 @@ public class Features extends Business {
         Set<Friends> sf = FMGR.find(MY_ID);
         if (!sf.isEmpty()) {
             for (Friends f : sf) {
-                la = AMGR.find(f.getFriendID(), web, tag, MY_ID);
-                ListIterator<Annotation> it = la.listIterator();
-                while (it.hasNext()) {
-                    AMGR.remove(it.next());
-                }
+                AMGR.remove(f.getFriendID(), web, tag, MY_ID);
             }
         }
 

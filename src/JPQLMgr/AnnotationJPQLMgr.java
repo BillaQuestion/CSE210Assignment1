@@ -5,13 +5,16 @@
  */
 package JPQLMgr;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import model.Annotation;
+import model.IdWebpage;
 
 /**
  *
@@ -25,21 +28,33 @@ public class AnnotationJPQLMgr {
         persistence_unit = pu;
     }
 
-    public List<Annotation> find(String oid) {
+    /**
+     * *
+     * Find all annotation where ownerID == taggerID.
+     *
+     * @param oid ownerID
+     * @return
+     */
+    public Set<IdWebpage> findWebpageWithId(String oid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        List<Annotation> la = em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :oid")
+        List<Annotation> la = em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :oid AND c.taggerID LIKE :tid")
                 .setParameter("oid", oid)
+                .setParameter("tid", oid)
                 .getResultList();
 
         userTransaction.commit();
         em.close();
         emf.close();
 
-        return la;
+        Set<IdWebpage> si = new HashSet();
+        for (Annotation a : la) {
+            si.add(new IdWebpage(a.getOwnerID(), a.getWebPage()));
+        }
+        return si;
     }
 
     public List<Annotation> findByTagger(String tid) {
@@ -96,18 +111,18 @@ public class AnnotationJPQLMgr {
         return la;
     }
 
-    public List<Annotation> find(String oid, String web, String tag, String tid) {
+    public Annotation find(String oid, String web, String tag, String tid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        List<Annotation> la = em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.website LIKE :web AND c.tag LIKE :t AND c.taggerId LIKE :tid")
+        Annotation la = (Annotation) em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.website LIKE :web AND c.tag LIKE :t AND c.taggerId LIKE :tid")
                 .setParameter("id", oid)
                 .setParameter("web", web)
                 .setParameter("t", tag)
                 .setParameter("tid", tid)
-                .getResultList();
+                .getSingleResult();
 
         userTransaction.commit();
         em.close();
@@ -140,6 +155,24 @@ public class AnnotationJPQLMgr {
         userTransaction.begin();
 
         em.remove(a);
+
+        userTransaction.commit();
+        em.close();
+        emf.close();
+    }
+
+    public void remove(String oid, String web, String tag, String tid) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction userTransaction = em.getTransaction();
+        userTransaction.begin();
+
+        Annotation la = (Annotation) em.createQuery("DELETE c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.website LIKE :web AND c.tag LIKE :t AND c.taggerId LIKE :tid")
+                .setParameter("id", oid)
+                .setParameter("web", web)
+                .setParameter("t", tag)
+                .setParameter("tid", tid)
+                .getSingleResult();
 
         userTransaction.commit();
         em.close();

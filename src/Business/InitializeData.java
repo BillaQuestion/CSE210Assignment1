@@ -48,13 +48,15 @@ public class InitializeData extends Business {
     public void addFreinds(String fid) {
         try {
             FMGR.tryIsFriend(MY_ID, fid);
-            System.out.println("We've alread been friends!");
+            System.out.println("We've already been friends!");
         } catch (NoResultException nre) {
             FMGR.add(MY_ID, fid);
         }
     }
 
-    public void addAnnotation(Annotation a) throws EntityExistsException {
+    public void addAnnotation(String ti, String t, String w, String o) throws EntityExistsException {
+        Annotation a = new Annotation(ti, t, w, o);
         AMGR.add(a);
+
     }
 }
