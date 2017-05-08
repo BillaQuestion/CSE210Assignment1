@@ -1,6 +1,6 @@
 package run;
 
-import test.Test;
+import ui.UI;
 
 /**
  *
@@ -13,8 +13,8 @@ public class WebpageAnnotation {
      */
     public static void main(String[] args) {
 //        Test t = new Test("testJPA");
-        Test t = new Test("cse210Connector");
-
+        UI ui = new UI("cse210Connector");
+        ui.myDetailInformation();
 
     }
 

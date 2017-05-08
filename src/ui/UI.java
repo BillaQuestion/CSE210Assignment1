@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package ui;
 
 import Business.Features;
 import Business.InitializeData;
@@ -23,16 +23,26 @@ import model.Person;
  * @author Bill
  */
 //Try to use Junit
-public class Test {
+public class UI {
 
     private final Features features;
     private final InitializeData init;
     public final String persistence_unit;
 
-    public Test(String pu) {
+    public UI(String pu) {
         features = new Features(pu);
         persistence_unit = pu;
         init = new InitializeData(pu);
+    }
+
+    public void agile() {
+        Person p = features.myDetailInformation();
+        System.out.println("========================");
+        System.out.println(p.getID());
+        System.out.println(p.getName());
+        System.out.println(p.getCourse());
+        System.out.println(p.getEmail());
+        System.out.println("========================");
     }
 
     public void addData() {
@@ -69,25 +79,28 @@ public class Test {
 
     public void myDetailInformation() {
         Person p = features.myDetailInformation();
+        if (p == null) {
+            System.out.println("My detail information is not in the database!");
+        }
         System.out.println("My Detail Information");
         System.out.println("========================");
-        System.out.println(p.getID());
-        System.out.println(p.getName());
-        System.out.println(p.getCourse());
-        System.out.println(p.getEmail());
+        System.out.println("ID: " + p.getID());
+        System.out.println("Name: " + p.getName());
+        System.out.println("Program: " + p.getCourse());
+        System.out.println("Email: " + p.getEmail());
         System.out.println("========================");
     }
 
     public void allMyFriendsDetailInformation() {
         List<Person> lp = features.allMyFriendsDetailInformation();
         System.out.println("All My Friends' Detail Information");
+        System.out.println("========================");
         while (!lp.isEmpty()) {
             Person p = lp.remove(0);
-            System.out.println("========================");
-            System.out.println(p.getID());
-            System.out.println(p.getName());
-            System.out.println(p.getCourse());
-            System.out.println(p.getEmail());
+            System.out.println("ID: " + p.getID());
+            System.out.println("Name: " + p.getName());
+            System.out.println("Program: " + p.getCourse());
+            System.out.println("Email: " + p.getEmail());
             System.out.println("========================");
         }
     }
@@ -138,7 +151,7 @@ public class Test {
         while (!la.isEmpty()) {
             System.out.println("========================");
             Annotation a = la.remove(0);
-            System.out.println(a.getDatetime().toString());
+            System.out.println("Datetime: "+a.getDatetime().toString());
             System.out.println(a.getOwnerID());
             System.out.println(a.getWebPage());
             System.out.println(a.getTaggerID());
