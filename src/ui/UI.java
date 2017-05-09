@@ -10,16 +10,11 @@ import Business.InitializeData;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
 import model.Annotation;
-import model.Friends;
-import model.IdWebpage;
+import JPQLMgr.IdWebpage;
 import model.Person;
 
 /**

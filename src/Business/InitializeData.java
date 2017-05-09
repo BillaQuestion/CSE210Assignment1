@@ -5,12 +5,9 @@
  */
 package Business;
 
-import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
-import javax.persistence.RollbackException;
 import model.Annotation;
-import model.Friends;
 import model.Person;
 
 /**

@@ -14,7 +14,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import model.Annotation;
-import model.IdWebpage;
 
 /**
  *

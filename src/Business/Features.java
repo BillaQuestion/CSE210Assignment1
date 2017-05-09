@@ -16,7 +16,7 @@ import model.Annotation;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
-import model.IdWebpage;
+import JPQLMgr.IdWebpage;
 
 /**
  *
