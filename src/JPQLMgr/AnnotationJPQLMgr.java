@@ -111,6 +111,7 @@ public class AnnotationJPQLMgr {
         return la;
     }
 
+    //not used
     public Annotation find(String oid, String web, String tag, String tid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
