@@ -29,8 +29,10 @@ public class WebpageAnnotation {
         InitializeData i = new InitializeData(PERSISTENCE_UNIT);
         UI ui = new UI(f, i);
 //        ui.agile();
-//        ui.allTagsForAWebpageICanSee("www.t4.com", "1405052");
-        ui.addAnnotationToAWebpageICanSee("1405052", "www.t3233454.com", "Try again");
+//        ui.removeAnnotation("Good good website", "www.t4.com");
+//        ui.allTagsForAWebpageICanSee("www.t4.com", "1405896");
+        ui.allTagsForAWebpageICanSee("www.t4.com", "1405052");
+//        ui.addAnnotationToAWebpageICanSee("1405052", "www.t3233454.com", "Try again");
 //        ui.allAnnotationsForAWebpageICanSee("www.t4.com", "1405052");
 //        ui.myDetailInformation();
 //        ui.allMyFriendsDetailInformation();
@@ -48,7 +50,7 @@ public class WebpageAnnotation {
 
 //        Friends f = new Friends("123456", "1405896");
 //        em.persist(f);
-        Annotation a = new Annotation("1405896", "Good good website", "www.t4.com", "1405052");
+        Annotation a = new Annotation("1405052", "Good good website", "www.t4.com", "1405896");
         a.setDatetime(new Timestamp(10000000));
         em.persist(a);
 

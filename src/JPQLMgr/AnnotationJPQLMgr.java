@@ -98,7 +98,7 @@ public class AnnotationJPQLMgr {
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        List<Annotation> la = em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.website LIKE :web AND c.tag LIKE :t")
+        List<Annotation> la = em.createQuery("SELECT c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.webPage LIKE :web AND c.tag LIKE :t")
                 .setParameter("id", oid)
                 .setParameter("web", web)
                 .setParameter("t", tag)
@@ -154,6 +154,7 @@ public class AnnotationJPQLMgr {
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
+        a = em.merge(a);
         em.remove(a);
 
         userTransaction.commit();
@@ -167,12 +168,12 @@ public class AnnotationJPQLMgr {
         EntityTransaction userTransaction = em.getTransaction();
         userTransaction.begin();
 
-        Annotation la = (Annotation) em.createQuery("DELETE c FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.website LIKE :web AND c.tag LIKE :t AND c.taggerId LIKE :tid")
+        em.createQuery("DELETE FROM model.Annotation c WHERE c.ownerID LIKE :id AND c.webPage LIKE :web AND c.tag LIKE :t AND c.taggerID LIKE :tid")
                 .setParameter("id", oid)
                 .setParameter("web", web)
                 .setParameter("t", tag)
                 .setParameter("tid", tid)
-                .getSingleResult();
+                .executeUpdate();
 
         userTransaction.commit();
         em.close();
