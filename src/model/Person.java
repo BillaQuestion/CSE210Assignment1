@@ -6,9 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * The <code>Person</code> class is a model of the person. All records of person
- * in this coursework, no matter who he/she is, are implemented as instances of
- * this class.
+ * A JPA Entity class of person storing records of person. The corresponding
+ * table in database is <code>PERSON</code>. Besides, a helper enumerate
+ * {@link COURSES COURSES} is defined to restrict possible courses.
  *
  * @author Shiyao Zhang
  */
@@ -16,7 +16,9 @@ import javax.persistence.Id;
 public class Person implements Serializable {
 
     /**
-     * All possibles of {@link #course course}.
+     * All possible courses of {@link #course course}. {@link #NULL NULL}
+     * suggests the {@link #course course} in {@link Person Person} is
+     * undefined.
      */
     public static enum COURSES {
         NULL,
@@ -34,7 +36,7 @@ public class Person implements Serializable {
     private String ID;
 
     /**
-     * Represents the name of a person.
+     * Name of a person.
      */
     @Column(nullable = false, unique = true)
     private String name;
@@ -47,7 +49,7 @@ public class Person implements Serializable {
     private String course;
 
     /**
-     * Represents the email of a person.
+     * Email of a person.
      */
     @Column(nullable = false, unique = true)
     private String email;
@@ -55,13 +57,13 @@ public class Person implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="Constructors">
     /**
-     * Constructs a Person with no information assigned.
+     * Constructs an empty <code>Person</code>.
      */
     public Person() {
     }
 
     /**
-     * Constructs a Person with details.
+     * Constructs a <code>Person</code> with all attributes.
      *
      * @param i ID of the person.
      * @param n name of the person.
@@ -125,7 +127,7 @@ public class Person implements Serializable {
     /**
      * Get course of the <code>Person</code>.
      *
-     * @return course of the <code>Person</code>.
+     * @return {@link COURSES#NULL NULL} if course is undefined.
      */
     public String getCourse() {
         return course;

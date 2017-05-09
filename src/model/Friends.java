@@ -6,106 +6,86 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
+ * A JPA Entity class of one friend relationship. The corresponding table in
+ * database is <code>FRIENDS</code>. Id numbers of two {@link Person Person} in
+ * this friendship would be stored in this class.
  *
  * @author Shiyao Zhang
  */
 @Entity(name = "FRIENDS")
-//@IdClass(FriendsId.class)
 public class Friends implements Serializable {
 
+    // <editor-fold defaultstate="collapsed" desc="Attributes">
+    /**
+     * Id number of the first {@link Person Person} in the friendship.
+     */
     @Id
     @Column(nullable = false, unique = false)
     private String myId;
 
+    /**
+     * Id number of the second {@link Person Person} in the friendship.
+     */
     @Id
     @Column(nullable = false, unique = false)
     private String friendId;
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
+    /**
+     * Constructs an empty <code>Friends</code>.
+     */
     public Friends() {
     }
 
+    /**
+     * Constructs a <code>Friends</code> object.
+     *
+     * @param m Id of the first {@link Person Person} in the friendship.
+     * @param f Id of the second {@link Person Person} in the friendship.
+     */
     public Friends(String m, String f) {
         myId = m;
         friendId = f;
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
+    /**
+     * Set id of the first {@link Person Person}.
+     *
+     * @param m Id of the first {@link Person Person}.
+     */
     public void setMyID(String m) {
         myId = m;
     }
 
+    /**
+     * Get id of the first {@link Person Person}.
+     *
+     * @return Id of the first {@link Person Person}.
+     */
     public String getMyID() {
         return myId;
     }
 
+    /**
+     * Set id of the second {@link Person Person}.
+     *
+     * @param f Id of the second {@link Person Person}.
+     */
     public void setFriendID(String f) {
         friendId = f;
     }
 
+    /**
+     * Get id of the second {@link Person Person}.
+     *
+     * @return Id of the second {@link Person Person}.
+     */
     public String getFriendID() {
         return friendId;
     }
+    // </editor-fold>
 
-//    public class FriendsId implements Serializable {
-//
-//        private String myId;
-//        private String friendId;
-//
-//        public FriendsId() {
-//        }
-//
-//        public FriendsId(String m, String f) {
-//            myId = m;
-//            friendId = f;
-//        }
-//
-//        public void setMyID(String m) {
-//            myId = m;
-//        }
-//
-//        public String getMyId() {
-//            return myId;
-//        }
-//
-//        public void setFriendID(String f) {
-//            friendId = f;
-//        }
-//
-//        public String getFriendId() {
-//            return friendId;
-//        }
-//
-//        @Override
-//        public int hashCode() {
-//            return myId.hashCode() + 31 * friendId.hashCode();
-//        }
-//
-//        @Override
-//        public boolean equals(Object obj) {
-//            if (this == obj) {
-//                return true;
-//            }
-//            if (obj == null) {
-//                return false;
-//            }
-//            if (getClass() != obj.getClass()) {
-//                return false;
-//            }
-//            FriendsId other = (FriendsId) obj;
-//            if (myId == null) {
-//                if (other.myId != null) {
-//                    return false;
-//                }
-//            } else if (!myId.equals(other.myId)) {
-//                return false;
-//            }
-//            if (friendId == null) {
-//                if (other.friendId != null) {
-//                    return false;
-//                }
-//            } else if (!friendId.equals(other.friendId)) {
-//                return false;
-//            }
-//            return true;
-//        }
-//    }
 }
