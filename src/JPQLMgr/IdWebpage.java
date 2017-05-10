@@ -60,7 +60,7 @@ public class IdWebpage {
      * Indicates whether some other object is "equal to" this one.
      *
      * @param obj the reference object with which to compare.
-     * @return <code>trud</code> if and only if <code>id</code> and
+     * @return <code>true</code> if and only if <code>id</code> and
      * <code>webPage</code> in two <code>Object</code>s are "equal to".
      */
     @Override
