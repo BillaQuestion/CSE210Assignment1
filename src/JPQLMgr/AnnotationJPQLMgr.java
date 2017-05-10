@@ -11,23 +11,35 @@ import javax.persistence.Persistence;
 import model.Annotation;
 
 /**
+ * A Java Persistence Query Language Manager which would send query for
+ * {@link Annotation Annotation} to the connected database. There are methods to
+ * find, add, and remove {@link Annotation Annotation} to/from the database.
  *
  * @author Shiyao Zhang
  */
 public class AnnotationJPQLMgr {
 
+    /**
+     * The persistence unit used to connect database.
+     */
     private final String persistence_unit;
 
+    /**
+     * Constructs a JPQL Manager connecting to database.
+     *
+     * @param pu The persistence unit.
+     */
     public AnnotationJPQLMgr(String pu) {
         persistence_unit = pu;
     }
 
     /**
      * *
-     * Find all annotation where ownerID == taggerID.
+     * Find all annotation where <code>ownerID == taggerID</code> from the
+     * database.
      *
      * @param oid ownerID
-     * @return
+     * @return <code>null</code> if the owner didn't publish any web page.
      */
     public Set<IdWebpage> findWebpageWithId(String oid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
@@ -51,6 +63,13 @@ public class AnnotationJPQLMgr {
         return si;
     }
 
+    /**
+     * Find Annotation by tagger id from the database.
+     *
+     * @param tid tagger id.
+     * @return <code>null</code> if there is no tag published by this specific
+     * id.
+     */
     public List<Annotation> findByTagger(String tid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
@@ -68,6 +87,15 @@ public class AnnotationJPQLMgr {
         return la;
     }
 
+    /**
+     * Find all Annotation published with a specific web page from the database.
+     * The specific web page would be satisfied if and only if the owner id and
+     * web page are all "equal to" the given value.
+     *
+     * @param oid Owner id of the web page.
+     * @param web Web page address.
+     * @return <code>null</code> if no <code>Annotation</code> found.
+     */
     public List<Annotation> find(String oid, String web) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
@@ -86,6 +114,17 @@ public class AnnotationJPQLMgr {
         return la;
     }
 
+    /**
+     * Find all Annotation published with a specific tag from the database. The
+     * specific tag would be satisfied if and only if the tag, which is "equal
+     * to" the given value, is common on a specific web page, whose values would
+     * be "equal to" the web page address and owner id.
+     *
+     * @param oid Owner id.
+     * @param web Web page address.
+     * @param tag Tag.
+     * @return <code>null</code> if no Annotation of this specific tag.
+     */
     public List<Annotation> find(String oid, String web, String tag) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
@@ -126,6 +165,13 @@ public class AnnotationJPQLMgr {
         return la;
     }
 
+    /**
+     * Add an <code>Annotation</code> to the database. The identity of the
+     * Entity would checked.
+     *
+     * @param a The Annotation to be added.
+     * @throws EntityExistsException if the Entity to be added is not identity.
+     */
     public void add(Annotation a) {
         if (!isIdentity(a)) {
             throw new EntityExistsException();
@@ -143,6 +189,14 @@ public class AnnotationJPQLMgr {
         emf.close();
     }
 
+    /**
+     * Remove an <code>Annotation</code> from the database. The
+     * <code>Entity</code> would be merged, if there exists, to the same
+     * <code>Entity</code> in the database. Hence, the Entity to be removed
+     * cannot be transient.
+     *
+     * @param a The <code>Annotation</code> to be removed.
+     */
     public void remove(Annotation a) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();
@@ -157,6 +211,16 @@ public class AnnotationJPQLMgr {
         emf.close();
     }
 
+    /**
+     * Remove all <code>Annotation</code> with a specific tag. The specific tag
+     * would be satisfied if and only if all owner id, web page address, tag,
+     * and tagger id are "equal to" values given.
+     *
+     * @param oid Owner id.
+     * @param web Web page address.
+     * @param tag Tag.
+     * @param tid Tagger id.
+     */
     public void remove(String oid, String web, String tag, String tid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
         EntityManager em = emf.createEntityManager();

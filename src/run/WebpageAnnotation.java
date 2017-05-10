@@ -29,9 +29,9 @@ public class WebpageAnnotation {
         InitializeData i = new InitializeData(PERSISTENCE_UNIT);
         UI ui = new UI(f, i);
 //        ui.agile();
-//        ui.removeAnnotation("Good good website", "www.t4.com");
+        ui.removeAnnotation("Good good website", "dfasdfasdfasdfasdfas");
 //        ui.allTagsForAWebpageICanSee("www.t4.com", "1405896");
-        ui.allTagsForAWebpageICanSee("www.t4.com", "1405052");
+//        ui.allTagsForAWebpageICanSee("www.t4.com", "1405052");
 //        ui.addAnnotationToAWebpageICanSee("1405052", "www.t3233454.com", "Try again");
 //        ui.allAnnotationsForAWebpageICanSee("www.t4.com", "1405052");
 //        ui.myDetailInformation();
