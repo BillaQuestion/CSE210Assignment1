@@ -22,7 +22,7 @@ import JPQLMgr.IdWebpage;
 public class Features extends Business {
 
     /**
-     * Constructs a <code>Business</code> object initializing Java Persistence
+     * Constructs a <code>Features</code> object initializing Java Persistence
      * Query Language Manager of Person, Friends, and Annotation.
      *
      * @param pu The persistence unit used to connect database.
@@ -225,6 +225,16 @@ public class Features extends Business {
         return a;
     }
 
+    /**
+     * Remove all Annotations for a specific tag from the database. For web page
+     * published by myself, if there exists, all Annotations with the specific
+     * tag, no matter who published, will be removed. For web page published by
+     * my friends, if there exists, only Annotations of the specific tag
+     * published by myself will be removed.
+     *
+     * @param tag Tag of the Annotation.
+     * @param web Web page address of the Annotation.
+     */
     public void removeAnnotation(String tag, String web) {  //write AMTR.remove(My_ID, web,tag);
         List<Annotation> la = AMGR.find(MY_ID, web, tag);
         if (!la.isEmpty()) {

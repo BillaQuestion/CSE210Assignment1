@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ui;
 
 import Business.Features;
@@ -18,30 +13,39 @@ import JPQLMgr.IdWebpage;
 import model.Person;
 
 /**
+ * Describe all functions may be used for user interface whenever during
+ * demonstration or initialization. Command window would be used as information
+ * output.
  *
- * @author Bill
+ * @author Shiyao Zhang
  */
 //Try to use Junit
 public class UI {
 
+    /**
+     * Object describes required features.
+     */
     private final Features features;
+
+    /**
+     * Object describes needed initialization methods.
+     */
     private final InitializeData init;
 
+    /**
+     * Constructs an <code>UI</code> object.
+     *
+     * @param f Object Object describes required features.
+     * @param i Object describes needed initialization methods.
+     */
     public UI(Features f, InitializeData i) {
         features = f;
         init = i;
     }
 
-    public void agile() {
-        Set<IdWebpage> lw = features.allFriendsWebsite("12345432");
-        System.out.println("All My Friends' Webpages");
-        System.out.println("========================");
-        for (IdWebpage a : lw) {
-            System.out.println(a.getID() + "\t\t" + a.getWebPage());
-        }
-        System.out.println("========================");
-    }
-
+    /**
+     * Show all my information.
+     */
     public void myDetailInformation() {
         Person p = features.myDetailInformation();
         if (p == null) {
@@ -57,6 +61,9 @@ public class UI {
         }
     }
 
+    /**
+     * Show all my friends information.
+     */
     public void allMyFriendsDetailInformation() {
         List<Person> lp = features.allMyFriendsDetailInformation();
         System.out.println("All My Friends' Detail Information");
@@ -75,6 +82,9 @@ public class UI {
         }
     }
 
+    /**
+     * Show all web pages published by myself.
+     */
     public void allMyWebpages() {
         Set<IdWebpage> sw = features.allMyWebpages();
         System.out.println("All My Webpages");
@@ -88,6 +98,9 @@ public class UI {
         System.out.println("========================");
     }
 
+    /**
+     * Show all tags published by myself.
+     */
     public void allMyTags() {
         List<String> lt = features.allMyTags();
         System.out.println("All My Tags");
@@ -98,6 +111,9 @@ public class UI {
         System.out.println("========================");
     }
 
+    /**
+     * Show all web pages published by all of my friends.
+     */
     public void allFriendsWebsite() {
         Set<IdWebpage> lw = features.allMyFriendsWebsite();
         System.out.println("All My Friends' Webpages");
@@ -108,6 +124,13 @@ public class UI {
         System.out.println("========================");
     }
 
+    /**
+     * Show all tags published by my friends on a specific web page. The
+     * specific web page must be published by one of my friends or myself.
+     *
+     * @param webpage Web page address.
+     * @param oid Owner id of the web page.
+     */
     public void allTagsForAWebpageICanSee(String webpage, String oid) {
         try {
             List<String> lt = features.allTagsForAWebsitePublishedByFriendOrMyself(webpage, oid);
@@ -128,6 +151,13 @@ public class UI {
         }
     }
 
+    /**
+     * Show all Annotations published for a specific web page. The specific web
+     * page must be published by one of my friends or myself.
+     *
+     * @param web Web page address.
+     * @param oid Owner id of the web page.
+     */
     public void allAnnotationsForAWebpageICanSee(String web, String oid) {
         try {
             List<Annotation> la = features.allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(web, oid);
@@ -154,6 +184,13 @@ public class UI {
         }
     }
 
+    /**
+     * Add an Annotation to a web page published by one of my friends or myself.
+     *
+     * @param oid Owner id of the web page.
+     * @param web Web page address.
+     * @param tag Tag.
+     */
     public void addAnnotationToAWebpageICanSee(String oid, String web, String tag) {
         try {
             Annotation a = features.addAnnotation(oid, web, tag);
@@ -178,30 +215,64 @@ public class UI {
         }
     }
 
+    /**
+     * Remove Annotations for a specific tag on a specific web page. If the web
+     * page is published by myself, all Annotations with the specific tag would
+     * be removed. If the web page is published by my friends, only Annotations
+     * published by myself with the specific tag would be removed.
+     *
+     * @param tag Tag of the Annotation.
+     * @param web Web page address.
+     */
     public void removeAnnotation(String tag, String web) {
         features.removeAnnotation(tag, web);
     }
 
-    public void addMyInformation() {
+    /**
+     * Initialize my information to the database. If the record is already
+     * exist, the Entity found would be modified.
+     */
+    public void initMyInformation() {
         init.addMyRecord();
     }
 
+    /**
+     * Initialize a <code>Friends</code> in to the database.
+     *
+     * @param fid Id of the friend.
+     */
     public void initAddFriends(String fid) {
         try {
             init.addFreinds(fid);
         } catch (EntityExistsException eee) {
-            System.out.println("exception");
+            System.out.println("We've already been friends!");
         }
     }
 
+    /**
+     * Initialize an Annotation to the database.
+     *
+     * @param ti Tagger id.
+     * @param t Tag.
+     * @param w Web page address.
+     * @param o Owner id.
+     */
     public void initAddAnnotation(String ti, String t, String w, String o) {
         try {
             init.addAnnotation(ti, t, w, o);
         } catch (RollbackException re) {
-            System.out.println("Exception catch.");
+            System.out.println("This Annotation has already been added.");
         }
     }
 
+    /**
+     * Initialize a Person to the database.
+     *
+     * @param id Id of the Person.
+     * @param name Name of the Person.
+     * @param course Program of the Person.
+     * @param email Email of the Person.
+     */
     public void initAddPerson(String id, String name, Person.COURSES course, String email) {
         init.addPerson(id, name, course, email);
     }

@@ -37,8 +37,8 @@ public class FriendsJPQLMgr {
      * Add a {@link Friends Friends} relation of two <code>Person</code>s to the
      * database.
      *
-     * @param mid The id of the first {@link Person Person} in friendship.
-     * @param fid The id of the second {@link Person Person} in friendship.
+     * @param mid The id of the first Person in friendship.
+     * @param fid The id of the second Person in friendship.
      */
     public void add(String mid, String fid) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistence_unit);
