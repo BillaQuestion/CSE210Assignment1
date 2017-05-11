@@ -36,7 +36,7 @@ public class AnnotationJPQLMgr {
     /**
      * *
      * Find all annotation where <code>ownerID == taggerID</code> from the
-     * database.
+     * database. Duplicate records would be removed.
      *
      * @param oid ownerID
      * @return <code>null</code> if the owner didn't publish any web page.

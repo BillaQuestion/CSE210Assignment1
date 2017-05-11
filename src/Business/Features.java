@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Business;
 
 import java.util.ArrayList;
@@ -19,23 +14,53 @@ import javax.persistence.NoResultException;
 import JPQLMgr.IdWebpage;
 
 /**
+ * A business layer class Implementing all functions required by the coursework
+ * specification.
  *
- * @author Bill
+ * @author Shiyao Zhang
  */
 public class Features extends Business {
 
+    /**
+     * Constructs a <code>Business</code> object initializing Java Persistence
+     * Query Language Manager of Person, Friends, and Annotation.
+     *
+     * @param pu The persistence unit used to connect database.
+     */
     public Features(String pu) {
         super(pu);
     }
 
+    /**
+     * Show detailed information (e.g., ID, name, course, and email) about
+     * myself.
+     *
+     * @return <code>null</code> if my information is not stored in the
+     * database.
+     */
     public Person myDetailInformation() {
         return PMGR.find(MY_ID);
     }
 
+    /**
+     * Show detailed information about all my friends.
+     *
+     * @return <code>null</code> if I don't have any friend.
+     */
     public List<Person> allMyFriendsDetailInformation() {
         return allFriendsDetailInformation(MY_ID);
     }
 
+    /**
+     * Show detailed information about all friends of a specific person
+     * represented by id. If a person found in the database is not persisted, an
+     * empty {@link Person Person} object would be generated and set id as the
+     * id found by {@link #FMGR FMGR}.
+     *
+     * @param id Id of the person.
+     * @return <code>null</code> if there is no friends record stored in the
+     * database.
+     */
     public List<Person> allFriendsDetailInformation(String id) {
         Set<Friends> sf = FMGR.findFriends(id);
         List<Person> lp = new ArrayList<>();
@@ -55,18 +80,41 @@ public class Features extends Business {
         return lp;
     }
 
+    /**
+     * Find all web pages published by myself.
+     *
+     * @return <code>null</code> if I didn't publish any web page.
+     */
     public Set<IdWebpage> allMyWebpages() {
         return allWebpages(MY_ID);
     }
 
+    /**
+     * Find all web pages published by a specific person.
+     *
+     * @param id Id of the person.
+     * @return <code>null</code> if the specific person didn't publish any web
+     * page.
+     */
     public Set<IdWebpage> allWebpages(String id) {
         return new HashSet(AMGR.findWebpageWithId(id));
     }
 
+    /**
+     * Find all tags published by myself.
+     *
+     * @return <code>null</code> if I didn't publish any tag.
+     */
     public List<String> allMyTags() {
         return allTags(MY_ID);
     }
 
+    /**
+     * Find all tags published by a specific person.
+     *
+     * @param id Id of the person.
+     * @return <code>null</code> if the specific person didn't publish any tag.
+     */
     public List<String> allTags(String id) {
         List<Annotation> la = AMGR.findByTagger(id);
 
@@ -82,10 +130,22 @@ public class Features extends Business {
         return ls;
     }
 
+    /**
+     * Find all web page published by my friends.
+     *
+     * @return <code>null</code> if no web page published by my friends.
+     */
     public Set<IdWebpage> allMyFriendsWebsite() {
         return allFriendsWebsite(MY_ID);
     }
 
+    /**
+     * Find all web page published by a specific person described by id.
+     *
+     * @param id Id number of the specific person.
+     * @return <code>null</code> if no web page published by the specific
+     * friends.
+     */
     public Set<IdWebpage> allFriendsWebsite(String id) {
         Set<Friends> sf = FMGR.findFriends(id);
         Set<IdWebpage> sa = new HashSet();
@@ -97,6 +157,15 @@ public class Features extends Business {
         return sa;
     }
 
+    /**
+     * Find all tags published by my friends or myself on a specific web page.
+     *
+     * @param web Address of the specific web page.
+     * @param oid Owner id of the specific web page.
+     * @return List of tags.
+     * @throws NoResultException if the specific web page is not published by a
+     * friend or myself.
+     */
     public List<String> allTagsForAWebsitePublishedByFriendOrMyself(String web, String oid) throws NoResultException {
         List<Annotation> la = allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(web, oid);
         ListIterator<Annotation> it = la.listIterator();
@@ -110,6 +179,15 @@ public class Features extends Business {
         return lw;
     }
 
+    /**
+     * Find all Annotations for a web page published by a friend or myself.
+     *
+     * @param web Web page address of the specific annotation.
+     * @param oid Owner id of the Annotation.
+     * @return List of Annotations sorted according to datetime.
+     * @throws NoResultException if the specific web page is not published by a
+     * friend or myself.
+     */
     public List<Annotation> allDatetimeSortedAnnotationForAWebsitePublishedByFriendOrMyself(String web, String oid) throws NoResultException {
         tryFriend(oid);
         List<Annotation> la = AMGR.find(oid, web);//exception?
@@ -123,10 +201,23 @@ public class Features extends Business {
     }
 
     //EntityExistsException when 
+    /**
+     * Add a specific Annotation to the database.
+     *
+     * @param oid Owner id of the Annotation.
+     * @param web Web page address.
+     * @param tag Tag.
+     * @return The Annotation added to the database.
+     * @throws EntityExistsException if there exists an Annotation with same tag
+     * published by myself.
+     * @throws EntityNotFoundException if the specific web page is not found in
+     * the database.
+     *
+     */
     public Annotation addAnnotation(String oid, String web, String tag) throws EntityExistsException {
         tryFriend(oid);
         List<Annotation> la = AMGR.find(oid, web);
-        if(la.isEmpty()){
+        if (la.isEmpty()) {
             throw new EntityNotFoundException();
         }
         Annotation a = new Annotation(MY_ID, tag, web, oid);
