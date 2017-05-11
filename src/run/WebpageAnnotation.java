@@ -41,35 +41,4 @@ public class WebpageAnnotation {
 //        ui.allMyTags();
 //        ui.addFriends("1405462");
     }
-
-    private static void addData() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction userTransaction = em.getTransaction();
-        userTransaction.begin();
-
-//        Friends f = new Friends("123456", "1405896");
-//        em.persist(f);
-        Annotation a = new Annotation("1405052", "Good good website", "www.t4.com", "1405896");
-        a.setDatetime(new Timestamp(10000000));
-        em.persist(a);
-
-        userTransaction.commit();
-        em.close();
-        emf.close();
-    }
-
-    private static void friendsAddTest() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction userTransaction = em.getTransaction();
-        userTransaction.begin();
-
-        Friends f = new Friends("1405896", "000");
-        em.persist(f);
-
-        userTransaction.commit();
-        em.close();
-        emf.close();
-    }
 }
